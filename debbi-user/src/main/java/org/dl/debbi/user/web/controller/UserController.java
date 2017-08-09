@@ -1,12 +1,13 @@
 package org.dl.debbi.user.web.controller;
 
-import org.dl.debbi.common.vo.ResponseVo;
+import org.dl.debbi.user.domain.Authority;
+import org.dl.debbi.user.service.IAuthorityService;
 import org.dl.debbi.user.vo.LoginVo;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户控制器
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Dean
  * @version 0.0.1
  */
-@Controller
+@RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-//    @Autowired
-//    private IUserService userService;
+    @Autowired
+    private IAuthorityService authorityService;
+
 
     /**
      * 普通登录
@@ -28,10 +30,14 @@ public class UserController {
      * @return 用户信息
      */
     @PostMapping("/login")
-    @ResponseBody
-    public ResponseVo login(@RequestBody LoginVo loginVo) {
-//        UseruserService.login(loginVo.getPrincipal(), loginVo.getCredential());
-//        return new ResponseVo<>(true, "成功", null, null);
-        return new ResponseVo();
+    public Object login(@RequestBody LoginVo loginVo) {
+        return authorityService.login(loginVo);
     }
+
+    @PostMapping("/save")
+    public Object save(@RequestBody Authority authority) {
+        return authorityService.save(authority);
+    }
+
+
 }

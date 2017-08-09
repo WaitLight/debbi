@@ -10,6 +10,6 @@ import lombok.Data;
  */
 @Data
 public class LoginVo {
-    private String principal;
-    private String credential;
+    private String username;
+    private String password;
 }
