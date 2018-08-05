@@ -83,6 +83,11 @@
             <version>${shiro.version}</version>
         </dependency>
         <!--shiro end-->
+        <dependency>
+            <groupId>org.dl</groupId>
+            <artifactId>debbi-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
