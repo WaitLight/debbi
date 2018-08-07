@@ -1,26 +1,34 @@
 package org.dl.debbi.user.repo.impl;
 
-import org.dl.debbi.common.error.DebbiException;
+import lombok.extern.slf4j.Slf4j;
 import org.dl.debbi.user.domain.Account;
+import org.dl.debbi.user.error.AccountError;
 import org.dl.debbi.user.repo.AccountRepository;
 import org.dl.debbi.user.utils.AccountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Repository
+@Slf4j
 public class AccountRepositoryImpl implements AccountRepository {
 
     @Autowired
     private AccountJPARepository japRepo;
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
+    @Transactional
     public Optional<Account> regist(String principal, String certificate) {
         // 预置用户不可注册
         if (AccountUtil.isPreSetAccount(principal))
-            throw DebbiException.of("invalid_account");
+            throw AccountError.InvalidPrincipal.exception();
 
         Account account = new Account();
         account.principal = principal;
@@ -37,16 +45,22 @@ public class AccountRepositoryImpl implements AccountRepository {
         return Optional.empty();
     }
 
-    private Optional<Account> save(Account account) {
+    private Optional<Account> insert(Account account) {
         // 保存时可能是id重复，也可能是principal重复
-        try {
-            account = japRepo.save(account);
-        } catch (Exception e) {
-
+        for (int i = 0; i < 3; i++) {
+            account.created = new Date();
+            account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
+            try {
+                // TODO: insert
+            } catch (Exception e) {
+                if (japRepo.findByPrincipal(account.principal) != null)
+                    throw AccountError.DuplicatePrincipal.exception();
+            }
+            return Optional.of(account);
         }
 
-
-        return Optional.of(account);
+        log.info("Retrying 3 times still fails to register.");
+        throw AccountError.RegisterFail.exception();
     }
 
 

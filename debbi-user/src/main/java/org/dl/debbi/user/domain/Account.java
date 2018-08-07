@@ -25,4 +25,8 @@ public class Account {
 
     public Date created;
     public Date deleted;
+
+    public boolean isDeleted() {
+        return deleted == null;
+    }
 }

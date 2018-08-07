@@ -1,6 +1,7 @@
 package org.dl.debbi.user.utils;
 
 import org.dl.debbi.common.error.DebbiException;
+import org.dl.debbi.user.error.AccountError;
 import org.springframework.util.StringUtils;
 
 import java.util.regex.Matcher;
@@ -12,7 +13,7 @@ public class AccountUtil {
 
     public static long extractAccountId(String principal) {
         if (StringUtils.isEmpty(principal) || !principal.matches(ACCOUNT_REGEX))
-            throw DebbiException.of("invalid_principal");
+            throw AccountError.InvalidPrincipal.exception();
 
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(principal);

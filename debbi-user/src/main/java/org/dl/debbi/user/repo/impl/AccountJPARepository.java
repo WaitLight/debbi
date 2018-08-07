@@ -4,6 +4,5 @@ import org.dl.debbi.user.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AccountJPARepository extends JpaRepository<Account, Long> {
-
-    Account insert(Account account);
+    Account findByPrincipal(String principal);
 }
