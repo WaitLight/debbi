@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,30 +32,28 @@ public class AccountRepositoryImpl implements AccountRepository {
         Account account = new Account();
         account.principal = principal;
         account.certificate = certificate;
-        account.created = new Date();
 
-        // 测试账号id不随机
-        if (AccountUtil.isTestAccount(principal)) {
-            account.id = AccountUtil.extractAccountId(principal);
-        } else {
-
-        }
-
-        return Optional.empty();
+        return insert(account);
     }
 
     private Optional<Account> insert(Account account) {
         // 保存时可能是id重复，也可能是principal重复
         for (int i = 0; i < 3; i++) {
-            account.created = new Date();
-            account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
-            try {
-                // TODO: insert
-            } catch (Exception e) {
-                if (japRepo.findByPrincipal(account.principal) != null)
-                    throw AccountError.DuplicatePrincipal.exception();
+            if (AccountUtil.isTestAccount(account.principal)) {
+                // 测试账号id不随机
+                account.id = AccountUtil.extractAccountId(account.principal);
+            } else {
+                account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
             }
-            return Optional.of(account);
+            try {
+                japRepo.insert(account.id, account.principal, account.certificate);
+                return Optional.of(account);
+            } catch (Exception e) {
+                if (japRepo.findByPrincipal(account.principal) != null) {
+                    log.debug("Duplicate principal: {}", account.principal);
+                    throw AccountError.DuplicatePrincipal.exception();
+                }
+            }
         }
 
         log.info("Retrying 3 times still fails to register.");

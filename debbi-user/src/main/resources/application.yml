@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://104.224.130.79:3306/debbi
+    url: jdbc:mysql://104.224.130.79:3306/debbi?autoReconnect=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: JFsI&f1v
+    password: admin
   jpa:
     show-sql: true
     hibernate:
