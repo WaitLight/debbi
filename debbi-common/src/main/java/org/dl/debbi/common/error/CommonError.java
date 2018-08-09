@@ -11,13 +11,14 @@ public enum CommonError implements ErrorType {
         this.code = code;
     }
 
+
     @Override
     public int getCode() {
         return this.code;
     }
 
     @Override
-    public DebbiException exception() {
-        return DebbiException.of(this);
+    public String getName() {
+        return this.name();
     }
 }

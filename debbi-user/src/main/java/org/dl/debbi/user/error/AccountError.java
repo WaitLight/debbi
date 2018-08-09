@@ -1,6 +1,5 @@
 package org.dl.debbi.user.error;
 
-import org.dl.debbi.common.error.DebbiException;
 import org.dl.debbi.common.error.ErrorType;
 
 public enum AccountError implements ErrorType {
@@ -16,13 +15,14 @@ public enum AccountError implements ErrorType {
         this.code = code;
     }
 
-    @Override
-    public DebbiException exception() {
-        return DebbiException.of(this);
-    }
 
     @Override
     public int getCode() {
         return this.code;
+    }
+
+    @Override
+    public String getName() {
+        return this.name();
     }
 }
