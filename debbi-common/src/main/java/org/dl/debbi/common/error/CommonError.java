@@ -2,6 +2,7 @@ package org.dl.debbi.common.error;
 
 // 通用的错误类型
 public enum CommonError implements ErrorType {
+    Unknow(9999),                   // 未知异常
     PermissionDenied(1001);         // 没有权限
 
 

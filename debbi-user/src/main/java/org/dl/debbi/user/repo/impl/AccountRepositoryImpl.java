@@ -8,7 +8,6 @@ import org.dl.debbi.user.utils.AccountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -19,8 +18,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Autowired
     private AccountJPARepository japRepo;
-    @Autowired
-    private EntityManager entityManager;
 
     @Override
     @Transactional
