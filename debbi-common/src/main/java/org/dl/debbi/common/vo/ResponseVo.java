@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @version 0.0.1
  */
 @Data
-public class ResponseVo<T> implements SimpleResponseVo<T>, Serializable {
+public abstract class ResponseVo<T> implements SimpleResponseVo<T>, Serializable {
 
     private static final long serialVersionUID = 6973678603919974923L;
 

@@ -13,6 +13,8 @@ public enum CommonError implements ErrorType {
 
     unsupport(415),                     // 不支持操作或数据类型
     expired(444),                       // 过期，数据的状态已经变更，且不能变回去的状态
+    status(445),                        // 当前操作的目标状态不允许操作
+    fail(446),                          // 当前操作可以允许失败时的错误
     todo(503),                          // 施工中请绕行
     server_error(500),                  // 未知异常
     ;

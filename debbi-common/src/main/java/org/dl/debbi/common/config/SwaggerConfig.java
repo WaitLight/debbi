@@ -37,7 +37,6 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title(swaggerSetting.getTitle())
                 .description("更多Spring Boot相关文章请关注：http://blog.didispace.com/")
                 .termsOfServiceUrl("http://blog.didispace.com/")
                 .contact("程序猿DD")

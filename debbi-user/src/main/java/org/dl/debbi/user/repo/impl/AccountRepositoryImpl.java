@@ -2,7 +2,7 @@ package org.dl.debbi.user.repo.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.dl.debbi.user.domain.Account;
-import org.dl.debbi.user.error.AccountError;
+import org.dl.debbi.user.UserError;
 import org.dl.debbi.user.repo.AccountRepository;
 import org.dl.debbi.user.utils.AccountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Optional<Account> regist(String principal, String certificate) {
         // 预置用户不可注册
         if (AccountUtil.isPreSetAccount(principal))
-            throw AccountError.InvalidPrincipal.exception();
+            throw UserError.invalid_principal.exception();
 
         Account account = new Account();
         account.principal = principal;
@@ -48,19 +48,19 @@ public class AccountRepositoryImpl implements AccountRepository {
             } catch (Exception e) {
                 if (japRepo.findByPrincipal(account.principal) != null) {
                     log.debug("Duplicate principal: {}", account.principal);
-                    throw AccountError.DuplicatePrincipal.exception();
+                    throw UserError.conflict_principal.exception("Principal: " + account.principal + " conflict!");
                 }
             }
         }
 
         log.info("Retrying 3 times still fails to register.");
-        throw AccountError.RegisterFail.exception();
+        throw UserError.register_fail.exception("Registration failed, please try again!");
     }
 
 
     @Override
     public void cleanup(long accountId) {
-        japRepo.delete(accountId);
+        japRepo.deleteById(accountId);
     }
 
 
