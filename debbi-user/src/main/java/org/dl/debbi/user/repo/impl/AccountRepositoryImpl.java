@@ -102,6 +102,4 @@ public class AccountRepositoryImpl implements AccountRepository {
     public void cleanup(long id) {
         jpaRepo.deleteById(id);
     }
-
-
 }
