@@ -17,19 +17,16 @@ public class ShiroConfig {
     public PasswordService passwordService(HashService hashService) {
         DefaultPasswordService passwordService = new DefaultPasswordService();
         passwordService.setHashService(hashService);
-        passwordService.setHashFormatFactory(new DefaultHashFormatFactory());
-        passwordService.setHashFormat(new Shiro1CryptFormat());
         return passwordService;
     }
 
     @Bean
     public HashService hashService() {
-        DefaultHashService hashService = new DefaultHashService();
-        hashService.setHashAlgorithmName("SHA-512");
-        hashService.setPrivateSalt(new SimpleByteSource("123")); //私盐，默认无
-        hashService.setGeneratePublicSalt(true);//是否生成公盐，默认false
-        hashService.setRandomNumberGenerator(new SecureRandomNumberGenerator());//用于生成公盐。默认就这个
-        hashService.setHashIterations(1); //生成Hash值的迭代次数
-        return hashService;
+        DefaultHashService defaultHashService = new DefaultHashService();
+        // 私有盐，不会持久化
+        defaultHashService.setPrivateSalt(new SimpleByteSource("cM#r&C~V"));
+        // 在没有公盐时，是否生成
+        defaultHashService.setGeneratePublicSalt(true);
+        return defaultHashService;
     }
 }

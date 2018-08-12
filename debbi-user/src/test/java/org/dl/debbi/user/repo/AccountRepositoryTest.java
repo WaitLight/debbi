@@ -20,7 +20,7 @@ public class AccountRepositoryTest {
 
     @Before
     public void before() {
-        Optional<Account> accountOpt = accountRepo.regist("test-4001", "123");
+        Optional<Account> accountOpt = accountRepo.register("test-4001", "123");
         assert accountOpt.isPresent();
     }
 
@@ -31,12 +31,12 @@ public class AccountRepositoryTest {
 
     @Test(expected = Exception.class)
     public void registerDuplicate() {
-        accountRepo.regist("test-4001", "123");
+        accountRepo.register("test-4001", "123");
     }
 
     @Test
     public void normalRegister() {
-        Optional<Account> accountOptional = accountRepo.regist("abc312", "123");
+        Optional<Account> accountOptional = accountRepo.register("abc312", "123");
         assert accountOptional.isPresent();
 
         accountRepo.cleanup(accountOptional.get().id);
