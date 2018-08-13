@@ -43,5 +43,8 @@ public class AccountServiceTest {
     public void auth() {
         Account account = accountService.auth("wangxiaoming", "123321");
         Assert.notNull(account);
+
+        Account preSetAccount = accountService.auth("test-2001", "123456");
+        Assert.notNull(preSetAccount);
     }
 }

@@ -42,4 +42,14 @@ public class AccountRepositoryTest {
         accountRepo.cleanup(accountOptional.get().id);
     }
 
+    @Test
+    public void getPreSetAccount() {
+        Optional<Account> preSetAccount = accountRepo.get(2000);
+        assert preSetAccount.isPresent();
+        Account account = preSetAccount.get();
+        assert account.id == 2000;
+        assert account.principal.startsWith("test-");
+        assert account.certificate.equals("123456");
+    }
+
 }
