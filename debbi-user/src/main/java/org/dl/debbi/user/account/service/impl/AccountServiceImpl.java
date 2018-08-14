@@ -1,6 +1,7 @@
 package org.dl.debbi.user.account.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.PasswordService;
 import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.user.account.utils.AccountHelper;
@@ -48,6 +49,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public void resetCertificate(long id, String originalCertificate, String newCertificate) {
         // TODO 退出当前登录的所有客户端
+        // TODO 验证码
         Account account = transitory(id);
         if (passwordService.passwordsMatch(originalCertificate, account.certificate)) {
             account.certificate = passwordService.encryptPassword(newCertificate);
