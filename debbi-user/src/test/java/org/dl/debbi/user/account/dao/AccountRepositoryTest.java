@@ -1,6 +1,6 @@
-package org.dl.debbi.user.repo;
+package org.dl.debbi.user.account.dao;
 
-import org.dl.debbi.user.domain.Account;
+import org.dl.debbi.user.account.domain.Account;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

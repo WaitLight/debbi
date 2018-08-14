@@ -1,6 +1,6 @@
-package org.dl.debbi.user.utils;
+package org.dl.debbi.user.account.utils;
 
-import org.dl.debbi.user.UserError;
+import org.dl.debbi.user.error.UserError;
 import org.springframework.util.StringUtils;
 
 import java.util.regex.Matcher;

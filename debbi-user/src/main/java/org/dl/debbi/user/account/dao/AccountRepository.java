@@ -1,8 +1,7 @@
-package org.dl.debbi.user.repo;
+package org.dl.debbi.user.account.dao;
 
-import org.dl.debbi.user.domain.Account;
+import org.dl.debbi.user.account.domain.Account;
 
-import java.lang.reflect.Field;
 import java.util.Optional;
 
 public interface AccountRepository {
@@ -13,8 +12,13 @@ public interface AccountRepository {
     Optional<Account> getByPrincipal(String principal);
 
     void delete(long id);
-    Optional<Account> update(long id, String field, Object value);
+    Account update(Account account);
 
     // 彻底清理数据
     void cleanup(long id);
+
+    enum Type {
+        PRINCIPAL,
+        CERTIFICATE
+    }
 }

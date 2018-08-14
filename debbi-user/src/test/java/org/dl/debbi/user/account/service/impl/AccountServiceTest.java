@@ -1,17 +1,16 @@
-package org.dl.debbi.user.service.impl;
+package org.dl.debbi.user.account.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.util.Assert;
-import org.dl.debbi.user.domain.Account;
-import org.dl.debbi.user.repo.AccountRepository;
-import org.dl.debbi.user.service.AccountService;
+import org.dl.debbi.user.account.domain.Account;
+import org.dl.debbi.user.account.dao.AccountRepository;
+import org.dl.debbi.user.account.service.AccountService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;

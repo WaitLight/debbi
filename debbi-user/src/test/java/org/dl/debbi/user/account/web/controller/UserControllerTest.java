@@ -1,4 +1,4 @@
-package org.dl.debbi.user.web.controller;
+package org.dl.debbi.user.account.web.controller;
 
 import org.junit.Ignore;
 import org.junit.Test;

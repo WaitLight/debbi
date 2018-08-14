@@ -1,6 +1,6 @@
-package org.dl.debbi.user.repo.impl;
+package org.dl.debbi.user.account.dao.impl;
 
-import org.dl.debbi.user.domain.Account;
+import org.dl.debbi.user.account.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

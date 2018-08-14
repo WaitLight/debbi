@@ -1,22 +1,23 @@
-package org.dl.debbi.user.repo.impl;
+package org.dl.debbi.user.account.dao.impl;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
-import org.dl.debbi.user.UserError;
-import org.dl.debbi.user.domain.Account;
-import org.dl.debbi.user.repo.AccountRepository;
+import org.dl.debbi.common.error.CommonError;
+import org.dl.debbi.user.account.utils.AccountHelper;
+import org.dl.debbi.user.error.UserError;
+import org.dl.debbi.user.account.domain.Account;
+import org.dl.debbi.user.account.dao.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.dl.debbi.user.utils.AccountHelper.*;
+import static org.dl.debbi.user.account.utils.AccountHelper.*;
 
 @Repository
 @Slf4j
@@ -80,26 +81,36 @@ public class AccountRepositoryImpl implements AccountRepository {
         jpaRepo.delete(id);
     }
 
-    @Override
     @Transactional
-    public synchronized Optional<Account> update(long id, String field, Object value) {
+    public synchronized Optional<Account> update(long id, Type type, Object value) {
         // TODO: 需要同步整个方法吗
         if (isPreSetAccount(id)) throw UserError.invalid_user.exception("Can not update preset account");
         Optional<Account> accountOpt = get(id);
         if (!accountOpt.isPresent()) throw UserError.invalid_user.exception();
 
         Account account = accountOpt.get();
-        try {
-            Field f = Account.class.getDeclaredField(field);
-            f.setAccessible(true);
-            f.set(account, value);
-        } catch (NoSuchFieldException e) {
-            throw UserError.invalid_user_info.exception("Field not exists: " + field);
-        } catch (IllegalAccessException e) {
-            throw UserError.invalid_user_info.exception("Set value fail, value: " + value);
-        }
 
+        switch (type) {
+            case PRINCIPAL:
+                account.principal = String.valueOf(value);
+                AccountHelper.assertPrincipal(account.principal);
+                break;
+            case CERTIFICATE:
+                account.certificate = String.valueOf(value);
+                break;
+            default:
+                throw CommonError.invalid_argument.exception("Can not update type: " + type.name());
+        }
         return Optional.of(jpaRepo.save(account));
+    }
+
+    @Override
+    @Transactional
+    public synchronized Account update(Account account) {
+        if (jpaRepo.existsById(account.id))
+            return jpaRepo.save(account);
+        else
+            throw UserError.invalid_user.exception();
     }
 
     private Optional<Account> insert(Account account) {

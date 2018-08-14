@@ -1,4 +1,4 @@
-package org.dl.debbi.user.domain;
+package org.dl.debbi.user.account.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
