@@ -29,8 +29,8 @@ public class DebbiException extends RuntimeException {
 
     private static Integer getHash(Exception e) {
         for (StackTraceElement element : e.getStackTrace()) {
-            // 异常堆栈信息类名：org.dl.debbi开头，必须包含dao、service、api、web、util、facade其中一种，不能包含cglib$$或error
-            if (element.getClassName().toLowerCase().matches("^org.dl.debbi((dao|service|api|web|util|facade).)*((?!cglib\\$\\$|error).)*$"))
+            // 异常堆栈信息类名：org.dl.debbi开头，必须包含repo、repository、dao、service、api、web、util、facade其中一种，不能包含cglib$$或error
+            if (element.getClassName().toLowerCase().matches("^org.dl.debbi((repo|repository|dao|service|api|web|util|facade).)*((?!cglib\\$\\$|error).)*$"))
                 return element.hashCode();
         }
         return null;
