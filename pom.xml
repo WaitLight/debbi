@@ -13,6 +13,7 @@
     <modules>
         <module>debbi-common</module>
         <module>debbi-user</module>
+        <module>debbi-controller</module>
     </modules>
 
     <properties>

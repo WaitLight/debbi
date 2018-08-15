@@ -5,6 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.dl.debbi.common.error.CommonError;
+import org.dl.debbi.common.util.TestHelper;
 import org.dl.debbi.user.account.utils.AccountHelper;
 import org.dl.debbi.user.error.UserError;
 import org.dl.debbi.user.account.domain.Account;
@@ -48,6 +49,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     private Account getMock(Long id) {
+        if (!TestHelper.enablePreSetUser()) return null;
         if (accountCache == null) {
             accountCache = CacheBuilder.newBuilder().maximumSize(1000)
                     .build(new CacheLoader<>() {

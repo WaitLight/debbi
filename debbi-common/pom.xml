@@ -10,6 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <groupId>org.dl.debbi</groupId>
     <artifactId>debbi-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
