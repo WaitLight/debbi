@@ -1,7 +1,6 @@
 package org.dl.debbi.user.account.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.PasswordService;
 import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.user.account.utils.AccountHelper;

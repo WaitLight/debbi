@@ -6,10 +6,10 @@ public interface ErrorType {
     String getName();
 
     default DebbiException exception() {
-        return new DebbiException(this);
+        return DebbiException.of(this);
     }
 
     default DebbiException exception(String message) {
-        return new DebbiException(this, message);
+        return DebbiException.of(this, message);
     }
 }
