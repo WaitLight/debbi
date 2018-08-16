@@ -20,8 +20,7 @@ public class AccountRepositoryTest {
 
     @Before
     public void before() {
-        Optional<Account> accountOpt = accountRepo.register("test-4001", "123");
-        assert accountOpt.isPresent();
+        accountRepo.register("test-4001", "123");
     }
 
     @After
@@ -36,10 +35,9 @@ public class AccountRepositoryTest {
 
     @Test
     public void normalRegister() {
-        Optional<Account> accountOptional = accountRepo.register("abc312", "123");
-        assert accountOptional.isPresent();
+        Account account = accountRepo.register("abc312", "123");
 
-        accountRepo.cleanup(accountOptional.get().id);
+        accountRepo.cleanup(account.id);
     }
 
     @Test

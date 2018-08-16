@@ -1,11 +1,9 @@
 package org.dl.debbi.user.account.dao.impl;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.dl.debbi.common.error.CommonError;
-import org.dl.debbi.common.util.TestHelper;
+import org.dl.debbi.common.utils.TestHelper;
 import org.dl.debbi.user.account.utils.AccountHelper;
 import org.dl.debbi.user.error.UserError;
 import org.dl.debbi.user.account.domain.Account;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,11 +24,12 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Autowired
     private AccountJPARepository jpaRepo;
 
+    @Autowired
     private LoadingCache<Long, Account> accountCache;
 
     @Override
     @Transactional
-    public Optional<Account> register(String principal, String certificate) {
+    public Account register(String principal, String certificate) {
 
         assertPrincipal(principal);
 
@@ -50,20 +48,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     private Account getMock(Long id) {
         if (!TestHelper.enablePreSetUser()) return null;
-        if (accountCache == null) {
-            accountCache = CacheBuilder.newBuilder().maximumSize(1000)
-                    .build(new CacheLoader<>() {
-                        @Override
-                        public Account load(Long id) {
-                            Account a = new Account();
-                            a.id = id;
-                            a.principal = PRINCIPAL_PREFIX + id;
-                            a.certificate = MOCK_CERTIFICATE;
-                            a.created = new Date();
-                            return a;
-                        }
-                    });
-        }
         return accountCache.getUnchecked(id);
     }
 
@@ -115,7 +99,7 @@ public class AccountRepositoryImpl implements AccountRepository {
             throw UserError.invalid_user.exception();
     }
 
-    private Optional<Account> insert(Account account) {
+    private Account insert(Account account) {
         // 保存时可能是id重复，也可能是principal重复
         for (int i = 0; i < 3; i++) {
             long testAccountId = isTestAccount(account.principal);
@@ -126,7 +110,7 @@ public class AccountRepositoryImpl implements AccountRepository {
             }
             try {
                 jpaRepo.insert(account.id, account.principal, account.certificate);
-                return Optional.of(account);
+                return account;
             } catch (Exception e) {
                 if (jpaRepo.findByPrincipal(account.principal).isPresent()) {
                     log.debug("Duplicate principal: {}", account.principal);

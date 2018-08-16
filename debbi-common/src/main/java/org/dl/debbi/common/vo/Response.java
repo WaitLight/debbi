@@ -10,7 +10,7 @@ public final class Response implements Serializable {
     /*-------错误信息-------*/
     public String err;
     public int code;
-    public int hash;
+    public String hash;
 
     private Response() {
     }
@@ -29,6 +29,12 @@ public final class Response implements Serializable {
         response.err = e.getErr();
         response.code = e.getCode();
         response.data = e.getData();
+        return response;
+    }
+
+    public static Response err(DebbiException e, String hash) {
+        Response response = err(e);
+        response.hash = hash;
         return response;
     }
 }

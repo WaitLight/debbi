@@ -1,6 +1,10 @@
 package org.dl.debbi.common.error.service;
 
+import org.dl.debbi.common.error.domain.ExceptionInfo;
+
+import java.util.List;
+
 public interface ExceptionService {
     String getHash(Exception e);
-    Object resolveHash(String hash);
+    List<ExceptionInfo> explainError(String hash);
 }
