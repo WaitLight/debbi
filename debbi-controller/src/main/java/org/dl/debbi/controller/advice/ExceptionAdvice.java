@@ -1,8 +1,9 @@
-package org.dl.debbi.controller;
+package org.dl.debbi.controller.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.dl.debbi.common.error.DebbiException;
 import org.dl.debbi.common.error.service.ExceptionService;
+import org.dl.debbi.common.utils.TestHelper;
 import org.dl.debbi.common.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +19,10 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(value = DebbiException.class)
     public Response handleException(DebbiException e) {
-        return Response.err(e, exceptionService.getHash(e));
+        if (TestHelper.enableErrorHash()) {
+            return Response.err(e, exceptionService.getHash(e));
+        } else {
+            return Response.err(e);
+        }
     }
 }

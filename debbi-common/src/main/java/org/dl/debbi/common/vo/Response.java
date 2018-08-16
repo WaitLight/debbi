@@ -1,20 +1,21 @@
 package org.dl.debbi.common.vo;
 
+import lombok.Data;
 import org.dl.debbi.common.error.DebbiException;
 
 import java.io.Serializable;
 
+@Data
 public final class Response implements Serializable {
     public boolean succ;
     public Object data;
     /*-------错误信息-------*/
     public String err;
-    public int code;
+    public Integer code;
     public String hash;
 
     private Response() {
     }
-
 
     public static Response succ(Object data) {
         Response response = new Response();

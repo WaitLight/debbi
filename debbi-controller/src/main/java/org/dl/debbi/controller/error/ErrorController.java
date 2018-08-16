@@ -17,8 +17,6 @@ public class ErrorController {
 
     @GetMapping("/explain")
     public Response explain(String hash) {
-        return Response.succ(exceptionService.explainError(hash).stream()
-                .map(e -> "_" + e.timeStamp + " : " + e.className + "." + e.methodName + "() [" + e.lineNumber + "]")
-                .collect(Collectors.toList()));
+        return Response.succ(exceptionService.explainError(hash));
     }
 }

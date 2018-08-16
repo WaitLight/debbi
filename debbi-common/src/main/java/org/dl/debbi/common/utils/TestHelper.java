@@ -5,4 +5,9 @@ public class TestHelper {
     public static boolean enablePreSetUser() {
         return true;
     }
+
+    // 是否启用错误hash信息
+    public static boolean enableErrorHash() {
+        return true;
+    }
 }
