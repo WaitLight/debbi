@@ -29,7 +29,6 @@ public final class Response implements Serializable {
         response.err = e.getErr();
         response.code = e.getCode();
         response.data = e.getData();
-        response.hash = e.getHash();
         return response;
     }
 }
