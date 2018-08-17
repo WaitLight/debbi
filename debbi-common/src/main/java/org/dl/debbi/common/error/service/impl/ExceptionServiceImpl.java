@@ -2,10 +2,12 @@ package org.dl.debbi.common.error.service.impl;
 
 import com.google.common.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
+import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.common.error.domain.ErrorLog;
 import org.dl.debbi.common.error.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class ExceptionServiceImpl implements ExceptionService {
 
     @Override
     public ErrorLog explainError(String hash) {
+        if (StringUtils.isEmpty(hash)) throw CommonError.miss_argument.exception();
         return errorLogCache.getIfPresent(hash);
     }
 }
