@@ -1,12 +1,9 @@
-package org.dl.debbi.user.config;
+package org.dl.debbi.user.account.config;
 
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.DefaultHashService;
 import org.apache.shiro.crypto.hash.HashService;
-import org.apache.shiro.crypto.hash.format.DefaultHashFormatFactory;
-import org.apache.shiro.crypto.hash.format.Shiro1CryptFormat;
 import org.apache.shiro.util.SimpleByteSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

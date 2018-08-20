@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface AccountRepository {
 
-    Optional<Account> register(String principal, String certificate);
+    Account register(String principal, String certificate);
 
     Optional<Account> get(long id);
     Optional<Account> getByPrincipal(String principal);

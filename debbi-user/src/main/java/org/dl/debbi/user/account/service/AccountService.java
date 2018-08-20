@@ -6,7 +6,7 @@ import org.dl.debbi.user.account.domain.Account;
 import java.util.Optional;
 
 public interface AccountService {
-    Optional<Account> register(String principal, String certificate);
+    Account register(String principal, String certificate);
 
     // 鉴权
     Account auth(String principal, String certificate);

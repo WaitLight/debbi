@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public Optional<Account> register(String principal, String certificate) {
+    public Account register(String principal, String certificate) {
         return accountRepo.register(principal, passwordService.encryptPassword(certificate));
     }
 
