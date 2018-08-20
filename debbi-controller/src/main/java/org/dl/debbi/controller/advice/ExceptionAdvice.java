@@ -19,6 +19,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(value = DebbiException.class)
     public Response handleException(DebbiException e) {
+        // 测试环境
         if (TestHelper.enableErrorHash()) {
             return Response.err(e, exceptionService.getHash(e));
         } else {
