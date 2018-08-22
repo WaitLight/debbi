@@ -1,7 +1,6 @@
 package org.dl.debbi.user;
 
 import io.lettuce.core.RedisClient;
-import io.lettuce.core.RedisURI;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.codec.Utf8StringCodec;
 import org.springframework.beans.factory.annotation.Value;

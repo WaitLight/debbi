@@ -47,7 +47,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     private Account getMock(Long id) {
-        if (!TestHelper.enablePreSetUser()) return null;
+        if (!TestHelper.ENABLE_PRESET_USER) return null;
         return accountCache.getUnchecked(id);
     }
 
