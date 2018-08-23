@@ -10,8 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 public class DebbiControllerApplication {
     public static void main(String[] args) {
-        log.info("[XXXXXXXXXXXXXXX]___DEBBI_starting___[XXXXXXXXXXXXXXX]");
         SpringApplication.run(DebbiControllerApplication.class, args);
-        log.info("[XXXXXXXXXXXXXXX]___DEBBI_started___[XXXXXXXXXXXXXXX]");
+        log.info("[XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX]___DEBBI_started___[XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX]");
     }
 }

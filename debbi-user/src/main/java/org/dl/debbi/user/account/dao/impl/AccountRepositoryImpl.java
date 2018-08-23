@@ -30,19 +30,18 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     @Transactional
     public Account register(String principal, String certificate) {
-
         assertPrincipal(principal);
+        assertCertificate(certificate);
 
         Account account = new Account();
         account.principal = principal;
         account.certificate = certificate;
-
         return insert(account);
     }
 
     @Override
     public Optional<Account> get(long id) {
-        if (isPreSetAccount(id)) return Optional.of(getMock(id));
+        if (isPreSetAccount(id)) return Optional.ofNullable(getMock(id));
         return jpaRepo.findById(id).filter(Account::isDeleted);
     }
 
@@ -54,7 +53,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public Optional<Account> getByPrincipal(String principal) {
         if (isPreSetAccount(principal))
-            return Optional.of(getMock(extractAccountId(principal)));
+            return Optional.ofNullable(getMock(extractAccountId(principal)));
 
         return jpaRepo.findByPrincipal(principal);
     }

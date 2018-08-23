@@ -10,6 +10,7 @@ public enum UserError implements ErrorType {
     register_fail(144601),                  // 注册失败
     conflict_principal(140901),             // 用户名重复
     invalid_user_info(144104),              // 错误的用户信息参数
+    invalid_captcha(144105)                 // 错误的验证码
     ;
 
     private int code;

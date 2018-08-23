@@ -4,12 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.PasswordService;
 import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.user.account.utils.AccountHelper;
+import org.dl.debbi.user.code.impl.StringCodeService;
 import org.dl.debbi.user.error.UserError;
 import org.dl.debbi.user.account.domain.Account;
 import org.dl.debbi.user.account.dao.AccountRepository;
 import org.dl.debbi.user.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -24,10 +26,13 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepo;
     @Autowired
     private PasswordService passwordService;
+    @Autowired
+    private StringCodeService codeService;
 
     @Override
     @Transactional
-    public Account register(String principal, String certificate) {
+    public synchronized Account register(String principal, String certificate, String code) {
+        codeService.verify(principal, code);
         return accountRepo.register(principal, passwordService.encryptPassword(certificate));
     }
 

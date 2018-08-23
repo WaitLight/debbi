@@ -11,6 +11,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import javax.imageio.event.IIOReadProgressListener;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -33,10 +34,17 @@ public class DebbiArgumentResolvers implements HandlerMethodArgumentResolver {
         JsonNode body = (JsonNode) request.getAttribute(BODY);
         if (body == null) {
             String bodyStr = StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8"));
-            body = objectMapper.readValue(bodyStr, JsonNode.class);
-            request.setAttribute(BODY, body);
+            if (!StringUtils.isEmpty(bodyStr)) {
+                body = objectMapper.readValue(bodyStr, JsonNode.class);
+                request.setAttribute(BODY, body);
+            }
         }
-        return convert((body).get(parameter.getParameterName()), parameter.getParameterType());
+
+        if (body == null) {
+            return null;
+        } else {
+            return convert((body).get(parameter.getParameterName()), parameter.getParameterType());
+        }
     }
 
     private static Object convert(JsonNode json, Type type) throws Exception {

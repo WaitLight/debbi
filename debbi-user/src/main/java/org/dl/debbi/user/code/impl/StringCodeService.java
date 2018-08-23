@@ -1,12 +1,14 @@
 package org.dl.debbi.user.code.impl;
 
 import io.lettuce.core.api.sync.RedisCommands;
-import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.dl.debbi.common.utils.TestHelper;
 import org.dl.debbi.user.code.CodeService;
+import org.dl.debbi.user.error.UserError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class StringCodeService implements CodeService<String, String> {
@@ -17,35 +19,35 @@ public class StringCodeService implements CodeService<String, String> {
     public static final int EXPIRED_TIME = 60;
 
     @Override
-    public String get(long userId) {
+    public String get(String principal) {
         String code = code();
-        redis.setex(getKey(userId), EXPIRED_TIME, code);
+        redis.setex(getKey(principal), EXPIRED_TIME, code);
         return code;
     }
 
     @Override
-    public boolean verify(long userId, String input) {
-        String key = getKey(userId);
+    public void verify(String principal, String input) {
+        String key = getKey(principal);
         String cacheCode = redis.get(key);
         if (StringUtils.isEmpty(cacheCode)) {
-            return false;
+            throw UserError.invalid_captcha.exception();
         }
         if (cacheCode.equals(input)) {
             redis.del(key);
-            return true;
+            return;
         }
-        return false;
+        throw UserError.invalid_captcha.exception();
     }
 
-    private String getKey(long userId) {
-        return "code_" + userId;
+    private String getKey(String principal) {
+        return "code_" + principal;
     }
 
     private String code() {
         if (TestHelper.ENABLE_TEST_CODE) {
             return TestHelper.TEST_CODE;
         } else {
-            return "666666";
+            return String.valueOf(ThreadLocalRandom.current().ints(100000, 999999));
         }
     }
 }

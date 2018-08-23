@@ -2,9 +2,9 @@ package org.dl.debbi.user.account.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.util.Assert;
-import org.dl.debbi.user.account.domain.Account;
+import org.dl.debbi.common.utils.TestHelper;
 import org.dl.debbi.user.account.dao.AccountRepository;
-import org.dl.debbi.user.account.service.AccountService;
+import org.dl.debbi.user.account.domain.Account;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class AccountServiceTest {
 
     @Before
     public void before() {
-        accountService.register("wangxiaoming", "123321");
+        accountService.register("wangxiaoming", "123321", TestHelper.TEST_CODE);
     }
 
     @After

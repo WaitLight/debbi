@@ -50,6 +50,12 @@ public class AccountHelper {
             throw UserError.invalid_principal.exception();
     }
 
+    public static void assertCertificate(String certificate) {
+        if (StringUtils.isEmpty(certificate)) {
+            throw UserError.invalid_certificate.exception();
+        }
+    }
+
     public static boolean isPreSetAccount(long accountId) {
         return accountId >= 2000 && accountId < 3000;
     }
