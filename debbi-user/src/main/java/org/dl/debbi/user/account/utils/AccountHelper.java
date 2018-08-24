@@ -12,11 +12,11 @@ public class AccountHelper {
     public static final String PRINCIPAL_PREFIX = "test-";
 
     // 任意数字
-    private static final String NUMBER_REGEX = "\\d+";
+    public static final String NUMBER_REGEX = "\\d+";
     // 测试和预置用户名规则test- 开头 ，后面为任意数字
-    private static final String TEST_PRINCIPAL_REGEX = "test-[0-9]*";
+    public static final String TEST_PRINCIPAL_REGEX = "test-[0-9]*";
     // 用户名规则：中英文数字和下划线，最小4位，最长20位
-    private static final String PRINCIPAL_REGEX = "[\\u4e00-\\u9fa5_a-zA-Z0-9]{4,20}";
+    public static final String PRINCIPAL_REGEX = "[\\u4e00-\\u9fa5_a-zA-Z0-9]{4,20}";
 
 
     public static long extractAccountId(String principal) {
@@ -36,18 +36,18 @@ public class AccountHelper {
         return isPreSetAccount(accountId);
     }
 
-    public static long isTestAccount(String principal) {
+    public static boolean isTestAccount(String principal) {
         long accountId = extractAccountId(principal);
-        if (accountId >= 3000 && accountId < 5000)
-            return accountId;
-        else
-            return -1L;
+        return accountId >= 3000 && accountId < 5000;
     }
 
     public static void assertPrincipal(String principal) {
-        if (StringUtils.isEmpty(principal) || isPreSetAccount(principal)  // 预置用户不可注册
-                || (!principal.matches(TEST_PRINCIPAL_REGEX) && !principal.matches(PRINCIPAL_REGEX))) // 用户名格式错误
-            throw UserError.invalid_principal.exception();
+        if (principal.matches(TEST_PRINCIPAL_REGEX)) {//以test开头
+            if (isPreSetAccount(principal) || isTestAccount(principal)) return;
+        } else {
+            if (principal.matches(PRINCIPAL_REGEX)) return;
+        }
+        throw UserError.invalid_principal.exception();
     }
 
     public static void assertCertificate(String certificate) {

@@ -101,9 +101,8 @@ public class AccountRepositoryImpl implements AccountRepository {
     private Account insert(Account account) {
         // 保存时可能是id重复，也可能是principal重复
         for (int i = 0; i < 3; i++) {
-            long testAccountId = isTestAccount(account.principal);
-            if (testAccountId != -1L) {
-                account.id = testAccountId;// 测试账号id不随机
+            if (isTestAccount(account.principal)) {
+                account.id = extractAccountId(account.principal);// 测试账号id不随机
             } else {
                 account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
             }
