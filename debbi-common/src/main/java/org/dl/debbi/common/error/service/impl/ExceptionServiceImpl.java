@@ -29,7 +29,7 @@ public class ExceptionServiceImpl implements ExceptionService {
     private static final String SEPARATOR = "&";
 
     @Override
-    public String getHash(Exception e) {
+    public String getErrorHash(Exception e) {
         StringBuilder hashStr = new StringBuilder();
         List<String> stackInfo = new ArrayList<>();
         for (StackTraceElement element : e.getStackTrace()) {
@@ -40,19 +40,19 @@ public class ExceptionServiceImpl implements ExceptionService {
                 stackInfo.add(element.getClassName() + "." + element.getMethodName() + ": " + element.getLineNumber());
             }
         }
-        String hash = encoder.encodeToString(hashStr.toString().getBytes(StandardCharsets.UTF_8));
+        String errorHash = encoder.encodeToString(hashStr.toString().getBytes(StandardCharsets.UTF_8));
 
         ErrorLog errorLog = new ErrorLog(e.getMessage(), stackInfo, System.currentTimeMillis());
-        if (!Objects.isNull(errorLogCache.getIfPresent(hash)))
-            log.info("Error hash: {}, errorLog: {}.", hash, errorLog);
-        errorLogCache.put(hash, errorLog);
+        if (!Objects.isNull(errorLogCache.getIfPresent(errorHash)))
+            log.info("ErrorHash: {}, ErrorLog: {}.", errorHash, errorLog);
+        errorLogCache.put(errorHash, errorLog);
 
-        return hash;
+        return errorHash;
     }
 
     @Override
-    public ErrorLog explainError(String hash) {
-        if (StringUtils.isEmpty(hash)) throw CommonError.miss_argument.exception();
-        return errorLogCache.getIfPresent(hash);
+    public ErrorLog explainError(String errorHash) {
+        if (StringUtils.isEmpty(errorHash)) throw CommonError.miss_argument.exception();
+        return errorLogCache.getIfPresent(errorHash);
     }
 }

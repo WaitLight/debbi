@@ -5,6 +5,6 @@ import org.dl.debbi.common.error.domain.ErrorLog;
 import java.util.List;
 
 public interface ExceptionService {
-    String getHash(Exception e);
-    ErrorLog explainError(String hash);
+    String getErrorHash(Exception e);
+    ErrorLog explainError(String errorHash);
 }

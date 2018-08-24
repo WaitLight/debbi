@@ -20,7 +20,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(value = DebbiException.class)
     public Response handleException(DebbiException e) {
         if (TestHelper.ENABLE_ERROR_HASH) {
-            return Response.err(e, exceptionService.getHash(e));
+            return Response.err(e, exceptionService.getErrorHash(e));
         } else {
             return Response.err(e);
         }
