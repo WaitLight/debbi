@@ -30,7 +30,7 @@ public class DebbiArgumentResolvers implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        // TODO 没有区分 GET POST
+        // TODO 因为这个get获取不到参数
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         JsonNode body = (JsonNode) request.getAttribute(BODY);
         if (body == null) {

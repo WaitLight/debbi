@@ -20,12 +20,9 @@ import java.util.Objects;
 public class ExceptionServiceImpl implements ExceptionService {
 
     @Autowired
-    private Base64.Encoder encoder;
-    @Autowired
-    private Base64.Decoder decoder;
-    @Autowired
     private Cache<String, ErrorLog> errorLogCache;
 
+    private Base64.Encoder encoder = Base64.getEncoder();
     private static final String SEPARATOR = "&";
 
     @Override
@@ -41,7 +38,6 @@ public class ExceptionServiceImpl implements ExceptionService {
             }
         }
         String errorHash = encoder.encodeToString(hashStr.toString().getBytes(StandardCharsets.UTF_8));
-
         ErrorLog errorLog = new ErrorLog(e.getMessage(), stackInfo, System.currentTimeMillis());
         if (!Objects.isNull(errorLogCache.getIfPresent(errorHash)))
             log.info("ErrorHash: {}, ErrorLog: {}.", errorHash, errorLog);
