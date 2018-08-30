@@ -3,7 +3,7 @@ package org.dl.debbi.user.account.dao.impl;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.dl.debbi.common.error.CommonError;
-import org.dl.debbi.common.utils.TestHelper;
+import org.dl.debbi.common.utils.BuildConfig;
 import org.dl.debbi.user.account.utils.AccountHelper;
 import org.dl.debbi.user.error.UserError;
 import org.dl.debbi.user.account.domain.Account;
@@ -46,7 +46,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     private Account getMock(Long id) {
-        if (!TestHelper.ENABLE_PRESET_USER) return null;
+        if (!BuildConfig.ENABLE_PRESET_USER) return null;
         return accountCache.getUnchecked(id);
     }
 
