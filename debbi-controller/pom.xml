@@ -62,7 +62,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <errorTypeClass>org.dl.debbi.common.error.ErrorType</errorTypeClass>
+                    <errorTypeClass>org.dl.debbi.common.error.Error</errorTypeClass>
                 </configuration>
             </plugin>
             <plugin>

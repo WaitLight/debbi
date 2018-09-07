@@ -1,32 +1,35 @@
 package org.dl.debbi.user.error;
 
-import org.dl.debbi.common.error.ErrorType;
+import org.dl.debbi.common.error.Error;
+import org.dl.debbi.common.error.Status;
 
-public enum UserError implements ErrorType {
+public enum UserError implements Error {
 
-    invalid_principal(144101),              // 非法用户名
-    invalid_user(144102),                   // 非法用户
-    invalid_certificate(144103),            // 错误的密码
-    register_fail(144601),                  // 注册失败
-    conflict_principal(140901),             // 用户名重复
-    invalid_user_info(144104),              // 错误的用户信息参数
-    invalid_captcha(144105)                 // 错误的验证码
+    INVALID_PRINCIPAL(144101, Status.INVALID_ARGUMENT),         // 非法用户名
+    INVALID_USER(144102, Status.INVALID_ARGUMENT),              // 非法用户
+    INVALID_CERTIFICATE(144103, Status.INVALID_ARGUMENT),       // 错误的密码
+    REGISTER_FAIL(144601, Status.INVALID_ARGUMENT),             // 注册失败
+    CONFLICT_PRINCIPAL(140901, Status.CONFLICT),                // 用户名重复
+    INVALID_CAPTCHA(144105, Status.INVALID_ARGUMENT),           // 错误的验证码
+    INVALID_UPDATE_KEY_WORD(1201, Status.INVALID_ARGUMENT),     // 错误的修改字段
     ;
 
     private int code;
+    private Status status;
 
-    UserError(int code) {
+    UserError(int code, Status status) {
         this.code = code;
+        this.status = status;
     }
 
-
     @Override
-    public int getCode() {
+    public int code() {
         return this.code;
     }
 
     @Override
-    public String getName() {
-        return this.name();
+    public Status status() {
+        return status;
     }
+
 }

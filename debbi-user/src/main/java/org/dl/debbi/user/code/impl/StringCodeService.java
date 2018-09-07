@@ -30,13 +30,13 @@ public class StringCodeService implements CodeService<String, String> {
         String key = getKey(principal);
         String cacheCode = redis.get(key);
         if (StringUtils.isEmpty(cacheCode)) {
-            throw UserError.invalid_captcha.exception();
+            throw UserError.INVALID_CAPTCHA.exception();
         }
         if (cacheCode.equals(input)) {
             redis.del(key);
             return;
         }
-        throw UserError.invalid_captcha.exception();
+        throw UserError.INVALID_CAPTCHA.exception();
     }
 
     private String getKey(String principal) {

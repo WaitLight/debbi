@@ -48,7 +48,7 @@ public class ExceptionServiceImpl implements ExceptionService {
 
     @Override
     public ErrorLog explainError(String errorHash) {
-        if (StringUtils.isEmpty(errorHash)) throw CommonError.miss_argument.exception();
+        if (StringUtils.isEmpty(errorHash)) throw CommonError.REQUIRED_ERROR_HASH.exception();
         return errorLogCache.getIfPresent(errorHash);
     }
 }

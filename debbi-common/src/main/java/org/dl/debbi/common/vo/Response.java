@@ -3,44 +3,48 @@ package org.dl.debbi.common.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.dl.debbi.common.error.DebbiException;
+import org.dl.debbi.common.error.Error;
+import org.dl.debbi.common.error.Status;
 
 import java.io.Serializable;
 
 @Data
 public final class Response implements Serializable {
-    public boolean succ;
+    public int status;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Object data;
-    /*-------错误信息-------*/
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String err;
+    public String message;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public Integer code;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String hash;
+    public Detail detail;
 
     private Response() {
     }
 
-    public static Response succ(Object data) {
+
+    public static Response success(Object data) {
         Response response = new Response();
-        response.succ = true;
+        response.status = Status.OK.code();
         response.data = data;
         return response;
     }
 
-    public static Response err(DebbiException e) {
+    public static Response fail(Error error) {
         Response response = new Response();
-        response.succ = false;
-        response.err = e.getErr();
-        response.code = e.getCode();
-        response.data = e.getData();
+        response.status = error.status().code();
+        response.message = error.status().name();
+        response.detail = new Detail(error.code(), error.name());
         return response;
     }
 
-    public static Response err(DebbiException e, String hash) {
-        Response response = err(e);
-        response.hash = hash;
-        return response;
+    static final class Detail {
+        int code;
+        String message;
+
+        Detail(int code, String message) {
+            this.code = code;
+            this.message = message;
+        }
     }
+
 }

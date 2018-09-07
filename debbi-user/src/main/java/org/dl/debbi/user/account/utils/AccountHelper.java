@@ -47,12 +47,12 @@ public class AccountHelper {
         } else {
             if (principal.matches(PRINCIPAL_REGEX)) return;
         }
-        throw UserError.invalid_principal.exception();
+        throw UserError.INVALID_PRINCIPAL.exception();
     }
 
     public static void assertCertificate(String certificate) {
         if (StringUtils.isEmpty(certificate)) {
-            throw UserError.invalid_certificate.exception();
+            throw UserError.INVALID_CERTIFICATE.exception();
         }
     }
 
