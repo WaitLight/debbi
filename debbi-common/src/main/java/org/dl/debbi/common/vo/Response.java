@@ -31,20 +31,20 @@ public final class Response implements Serializable {
 
     public static Response fail(Error error) {
         Response response = new Response();
-        response.status = error.status().code();
-        response.message = error.status().name();
-        response.detail = new Detail(error.code(), error.name());
+        response.status = error.getStatusCode();
+        response.message = error.getStatusName();
+        response.detail = new Detail(error.getCode(), error.getName());
         return response;
     }
 
-    static final class Detail {
-        int code;
-        String message;
+    @Data
+    static final class Detail implements Serializable {
+        private int code;
+        private String message;
 
         Detail(int code, String message) {
             this.code = code;
             this.message = message;
         }
     }
-
 }

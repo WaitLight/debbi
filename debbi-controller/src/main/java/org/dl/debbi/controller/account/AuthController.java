@@ -16,6 +16,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public Response register(String principal, String certificate, String code) {
-        return Response.succ(accountService.register(principal, certificate, code));
+        return Response.success(accountService.register(principal, certificate, code));
     }
 }

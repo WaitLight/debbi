@@ -16,6 +16,6 @@ public class ErrorController {
 
     @GetMapping("/explain")
     public Response explain(String errorHash) {
-        return Response.succ(exceptionService.explainError(errorHash));
+        return Response.success(exceptionService.explainError(errorHash));
     }
 }

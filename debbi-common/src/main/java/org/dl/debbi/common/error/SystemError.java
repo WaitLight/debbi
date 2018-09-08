@@ -14,12 +14,23 @@ public enum SystemError implements Error {
     }
 
     @Override
-    public int code() {
+    public int getCode() {
         return code;
     }
 
     @Override
-    public Status status() {
-        return status;
+    public String getName() {
+        return name().toLowerCase();
     }
+
+    @Override
+    public int getStatusCode() {
+        return status.code();
+    }
+
+    @Override
+    public String getStatusName() {
+        return status.name().toLowerCase();
+    }
+
 }

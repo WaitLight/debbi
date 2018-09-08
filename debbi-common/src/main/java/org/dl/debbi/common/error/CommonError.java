@@ -4,20 +4,31 @@ public enum CommonError implements Error {
     REQUIRED_ERROR_HASH(1001, Status.REQUIRED_ARGUMENT);
 
     private int code;
-    private Status basicError;
+    private Status status;
 
-    CommonError(int code, Status basicError) {
+    CommonError(int code, Status status) {
         this.code = code;
-        this.basicError = basicError;
+        this.status = status;
     }
 
     @Override
-    public int code() {
+    public int getCode() {
         return code;
     }
 
     @Override
-    public Status status() {
-        return basicError;
+    public String getName() {
+        return name().toLowerCase();
     }
+
+    @Override
+    public int getStatusCode() {
+        return status.code();
+    }
+
+    @Override
+    public String getStatusName() {
+        return status.name().toLowerCase();
+    }
+
 }

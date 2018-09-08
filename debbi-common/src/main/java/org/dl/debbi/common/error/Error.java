@@ -2,11 +2,13 @@ package org.dl.debbi.common.error;
 
 public interface Error {
 
-    int code();
+    int getCode();
 
-    String name();
+    String getName();
 
-    Status status();
+    int getStatusCode();
+
+    String getStatusName();
 
     default DebbiException exception() {
         return DebbiException.of(this);

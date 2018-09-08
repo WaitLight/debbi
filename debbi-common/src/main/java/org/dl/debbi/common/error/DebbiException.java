@@ -2,17 +2,17 @@ package org.dl.debbi.common.error;
 
 public final class DebbiException extends RuntimeException {
 
-    private Error type;
-    private Object data;
+    public Error error;
+    public Object data;
 
-    private DebbiException(Error type) {
-        super(type.code() + " " + type.name());
-        this.type = type;
+    private DebbiException(Error error) {
+        super(error.getCode() + " " + error.getName());
+        this.error = error;
     }
 
-    private DebbiException(Error type, Object data) {
-        super(type.code() + " " + type.name());
-        this.type = type;
+    private DebbiException(Error error, Object data) {
+        super(error.getCode() + " " + error.getName());
+        this.error = error;
         this.data = data;
     }
 
@@ -25,11 +25,11 @@ public final class DebbiException extends RuntimeException {
     }
 
     public String getErr() {
-        return type.name();
+        return error.getName();
     }
 
     public int getCode() {
-        return type.code();
+        return error.getCode();
     }
 
     public Object getData() {
