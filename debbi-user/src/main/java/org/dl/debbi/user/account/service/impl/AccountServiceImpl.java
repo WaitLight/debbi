@@ -2,7 +2,7 @@ package org.dl.debbi.user.account.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.PasswordService;
-import org.dl.debbi.common.error.SystemError;
+import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.user.account.dao.AccountRepository;
 import org.dl.debbi.user.account.domain.Account;
 import org.dl.debbi.user.account.service.AccountService;
@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
                 || passwordService.passwordsMatch(certificate, account.certificate))
             return account;
 
-        throw SystemError.UNAUTHORIZED.exception();
+        throw CommonError.UNAUTHORIZED.exception();
     }
 
     @Override

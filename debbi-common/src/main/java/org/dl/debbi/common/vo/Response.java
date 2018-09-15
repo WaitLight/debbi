@@ -23,15 +23,13 @@ public final class Response implements Serializable {
 
     public static Response success(Object data) {
         Response response = new Response();
-        response.status = CommonError.OK.code();
+        response.status = 10;
         response.data = data;
         return response;
     }
 
     public static Response fail(Error error) {
         Response response = new Response();
-        response.status = error.getStatusCode();
-        response.message = error.getStatusName();
         response.detail = new Detail(error.getCode(), error.getName());
         return response;
     }

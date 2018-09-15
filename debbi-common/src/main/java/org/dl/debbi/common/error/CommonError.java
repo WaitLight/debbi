@@ -1,6 +1,6 @@
 package org.dl.debbi.common.error;
 
-public enum CommonError {
+public enum CommonError implements Error {
     UNKONW(11),                 // 未知错误
     UNAUTHORIZED(12),           // 无法确认用户身份
     FORBIDDEN(13),              // 无权限操作数据或功能
@@ -20,7 +20,13 @@ public enum CommonError {
         this.code = code;
     }
 
-    public int code() {
-        return this.code;
+    @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getName() {
+        return name();
     }
 }
