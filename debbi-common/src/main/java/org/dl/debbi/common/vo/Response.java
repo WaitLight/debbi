@@ -2,9 +2,8 @@ package org.dl.debbi.common.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.dl.debbi.common.error.DebbiException;
 import org.dl.debbi.common.error.Error;
-import org.dl.debbi.common.error.Status;
+import org.dl.debbi.common.error.CommonError;
 
 import java.io.Serializable;
 
@@ -24,7 +23,7 @@ public final class Response implements Serializable {
 
     public static Response success(Object data) {
         Response response = new Response();
-        response.status = Status.OK.code();
+        response.status = CommonError.OK.code();
         response.data = data;
         return response;
     }

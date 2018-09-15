@@ -6,11 +6,11 @@ public interface Error {
 
     String getName();
 
-    int getStatusCode();
-
-    String getStatusName();
-
     default DebbiException exception() {
         return DebbiException.of(this);
+    }
+
+    default DebbiException exception(String message) {
+        return DebbiException.of(this, message);
     }
 }
