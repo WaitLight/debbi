@@ -33,7 +33,7 @@ public class AccountServiceTest {
 
     @After
     public void after() {
-        Optional<Account> accountOpt = accountRepo.getByPrincipal("wangxiaoming");
+        Optional<Account> accountOpt = accountRepo.getByUsername("wangxiaoming");
         assert accountOpt.isPresent();
         accountRepo.cleanup(accountOpt.get().id);
     }

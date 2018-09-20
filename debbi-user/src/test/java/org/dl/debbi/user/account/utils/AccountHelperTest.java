@@ -3,7 +3,7 @@ package org.dl.debbi.user.account.utils;
 import org.dl.debbi.common.error.DebbiException;
 import org.junit.Test;
 
-import static org.dl.debbi.user.account.utils.AccountHelper.assertPrincipal;
+import static org.dl.debbi.user.account.utils.AccountHelper.assertUsername;
 import static org.dl.debbi.user.account.utils.AccountHelper.isPreSetAccount;
 import static org.dl.debbi.user.account.utils.AccountHelper.isTestAccount;
 import static org.junit.Assert.*;
@@ -27,19 +27,19 @@ public class AccountHelperTest {
     }
 
     @Test(expected = DebbiException.class)
-    public void assertPrincipalTest__Error_Test() {
-        assertPrincipal("test-101");
+    public void assertUsernameTest__Error_Test() {
+        assertUsername("test-101");
     }
 
     @Test(expected = DebbiException.class)
-    public void assertPrincipalTest__Error() {
-        assertPrincipal("fsad&^");
+    public void assertUsernameTest__Error() {
+        assertUsername("fsad&^");
     }
 
     @Test
-    public void assertPrincipalTest() {
-        assertPrincipal("fdasf123");
-        assertPrincipal("test-2001");
-        assertPrincipal("test-3001");
+    public void assertUsernameTest() {
+        assertUsername("fdasf123");
+        assertUsername("test-2001");
+        assertUsername("test-3001");
     }
 }

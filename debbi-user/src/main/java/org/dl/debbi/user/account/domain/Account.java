@@ -19,9 +19,9 @@ public class Account {
     public long id;
 
     @Column(unique = true)
-    public String principal;
+    public String username;
 
-    public String certificate;
+    public String password;
 
     public Date created;
     public Date deleted;

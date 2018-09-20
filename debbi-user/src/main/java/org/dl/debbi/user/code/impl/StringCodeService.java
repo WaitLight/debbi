@@ -19,15 +19,15 @@ public class StringCodeService implements CodeService<String, String> {
     public static final int EXPIRED_TIME = 60;
 
     @Override
-    public String get(String principal) {
+    public String get(String username) {
         String code = code();
-        redis.setex(getKey(principal), EXPIRED_TIME, code);
+        redis.setex(getKey(username), EXPIRED_TIME, code);
         return code;
     }
 
     @Override
-    public void verify(String principal, String input) {
-        String key = getKey(principal);
+    public void verify(String username, String input) {
+        String key = getKey(username);
         String cacheCode = redis.get(key);
         if (StringUtils.isEmpty(cacheCode)) {
             throw UserError.INVALID_CAPTCHA.exception();
@@ -39,8 +39,8 @@ public class StringCodeService implements CodeService<String, String> {
         throw UserError.INVALID_CAPTCHA.exception();
     }
 
-    private String getKey(String principal) {
-        return "code_" + principal;
+    private String getKey(String username) {
+        return "code_" + username;
     }
 
     private String code() {

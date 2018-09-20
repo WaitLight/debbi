@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-import static org.dl.debbi.user.account.utils.AccountHelper.MOCK_CERTIFICATE;
+import static org.dl.debbi.user.account.utils.AccountHelper.MOCK_PASSWORD;
 import static org.dl.debbi.user.account.utils.AccountHelper.isPreSetAccount;
 
 @Service
@@ -30,19 +30,19 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public synchronized Account register(String principal, String certificate, String code) {
-        codeService.verify(principal, code);
-        return accountRepo.register(principal, passwordService.encryptPassword(certificate));
+    public synchronized Account register(String username, String password, String code) {
+        codeService.verify(username, code);
+        return accountRepo.register(username, passwordService.encryptPassword(password));
     }
 
     @Override
-    public Account auth(String principal, String certificate) {
-        Optional<Account> accountOpt = accountRepo.getByPrincipal(principal);
-        if (!accountOpt.isPresent()) throw UserError.INVALID_PRINCIPAL.exception();
+    public Account auth(String username, String password) {
+        Optional<Account> accountOpt = accountRepo.getByUsername(username);
+        if (!accountOpt.isPresent()) throw UserError.INVALID_USERNAME.exception();
 
         Account account = accountOpt.get();
-        if ((isPreSetAccount(account.id) && MOCK_CERTIFICATE.equals(certificate))
-                || passwordService.passwordsMatch(certificate, account.certificate))
+        if ((isPreSetAccount(account.id) && MOCK_PASSWORD.equals(password))
+                || passwordService.passwordsMatch(password, account.password))
             return account;
 
         throw CommonError.UNAUTHORIZED.exception();
@@ -50,26 +50,31 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public void resetCertificate(long id, String originalCertificate, String newCertificate) {
+    public void resetPassword(long id, String originalPassword, String newPassword) {
         // TODO 退出当前登录的所有客户端
         // TODO 验证码
         Account account = transitory(id);
-        if (passwordService.passwordsMatch(originalCertificate, account.certificate)) {
-            account.certificate = passwordService.encryptPassword(newCertificate);
+        if (passwordService.passwordsMatch(originalPassword, account.password)) {
+            account.password = passwordService.encryptPassword(newPassword);
             accountRepo.update(account);
         } else {
-            throw UserError.INVALID_CERTIFICATE.exception();
+            throw UserError.INVALID_PASSWORD.exception();
         }
     }
 
     @Override
     @Transactional
-    public void updatePrincipal(long id, String principal) {
+    public void updateUsername(long id, String username) {
         // TODO 修改用户名 有频率限制，次数限制
         Account account = transitory(id);
-        AccountHelper.assertPrincipal(principal);
-        account.principal = principal;
+        AccountHelper.assertUsername(username);
+        account.username = username;
         accountRepo.update(account);
+    }
+
+    @Override
+    public Object login(String username, String password) {
+        return null;
     }
 
     private Account transitory(long id) {

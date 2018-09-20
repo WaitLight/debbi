@@ -15,7 +15,7 @@ public class CodeController {
     private StringCodeService stringCodeService;
 
     @GetMapping("/code")
-    public Response execute(@RequestParam("principal") String principal) {
-        return Response.success(stringCodeService.get(principal));
+    public Response execute(@RequestParam("username") String username) {
+        return Response.success(stringCodeService.get(username));
     }
 }

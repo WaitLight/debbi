@@ -28,13 +28,13 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     @Transactional
-    public Account register(String principal, String certificate) {
-        assertPrincipal(principal);
-        assertCertificate(certificate);
+    public Account register(String username, String password) {
+        assertUsername(username);
+        assertPassword(password);
 
         Account account = new Account();
-        account.principal = principal;
-        account.certificate = certificate;
+        account.username = username;
+        account.password = password;
         return insert(account);
     }
 
@@ -50,11 +50,11 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public Optional<Account> getByPrincipal(String principal) {
-        if (isPreSetAccount(principal))
-            return Optional.ofNullable(getMock(extractAccountId(principal)));
+    public Optional<Account> getByUsername(String username) {
+        if (isPreSetAccount(username))
+            return Optional.ofNullable(getMock(extractAccountId(username)));
 
-        return jpaRepo.findByPrincipal(principal);
+        return jpaRepo.findByUsername(username);
     }
 
     @Override
@@ -74,12 +74,12 @@ public class AccountRepositoryImpl implements AccountRepository {
         Account account = accountOpt.get();
 
         switch (type) {
-            case PRINCIPAL:
-                account.principal = String.valueOf(value);
-                AccountHelper.assertPrincipal(account.principal);
+            case USERNAME:
+                account.username = String.valueOf(value);
+                AccountHelper.assertUsername(account.username);
                 break;
-            case CERTIFICATE:
-                account.certificate = String.valueOf(value);
+            case PASSWORD:
+                account.password = String.valueOf(value);
                 break;
             default:
                 throw UserError.INVALID_UPDATE_KEY_WORD.exception();
@@ -97,20 +97,20 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     private Account insert(Account account) {
-        // 保存时可能是id重复，也可能是principal重复
+        // 保存时可能是id重复，也可能是username重复
         for (int i = 0; i < 3; i++) {
-            if (isTestAccount(account.principal)) {
-                account.id = extractAccountId(account.principal);// 测试账号id不随机
+            if (isTestAccount(account.username)) {
+                account.id = extractAccountId(account.username);// 测试账号id不随机
             } else {
                 account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
             }
             try {
-                jpaRepo.insert(account.id, account.principal, account.certificate);
+                jpaRepo.insert(account.id, account.username, account.password);
                 return account;
             } catch (Exception e) {
-                if (jpaRepo.findByPrincipal(account.principal).isPresent()) {
-                    log.debug("Duplicate principal: {}", account.principal);
-                    throw UserError.CONFLICT_PRINCIPAL.exception();
+                if (jpaRepo.findByUsername(account.username).isPresent()) {
+                    log.debug("Duplicate username: {}", account.username);
+                    throw UserError.CONFLICT_USERNAME.exception();
                 }
             }
         }

@@ -8,51 +8,51 @@ import java.util.regex.Pattern;
 
 public class AccountHelper {
 
-    public static final String MOCK_CERTIFICATE = "123456";
-    public static final String PRINCIPAL_PREFIX = "test-";
+    public static final String MOCK_PASSWORD = "123456";
+    public static final String USERNAME_PREFIX = "test-";
 
     // 任意数字
     public static final String NUMBER_REGEX = "\\d+";
     // 测试和预置用户名规则test- 开头 ，后面为任意数字
-    public static final String TEST_PRINCIPAL_REGEX = "test-[0-9]*";
+    public static final String TEST_USERNAME_REGEX = "test-[0-9]*";
     // 用户名规则：中英文数字和下划线，最小4位，最长20位
-    public static final String PRINCIPAL_REGEX = "[\\u4e00-\\u9fa5_a-zA-Z0-9]{4,20}";
+    public static final String USERNAME_REGEX = "[\\u4e00-\\u9fa5_a-zA-Z0-9]{4,20}";
 
 
-    public static long extractAccountId(String principal) {
-        if (StringUtils.isEmpty(principal) || !principal.matches(TEST_PRINCIPAL_REGEX))
+    public static long extractAccountId(String username) {
+        if (StringUtils.isEmpty(username) || !username.matches(TEST_USERNAME_REGEX))
             return -1L;
 
         Pattern pattern = Pattern.compile(NUMBER_REGEX);
-        Matcher matcher = pattern.matcher(principal);
+        Matcher matcher = pattern.matcher(username);
         if (matcher.find()) {
             return Long.valueOf(matcher.group());
         }
         return -1L;
     }
 
-    public static boolean isPreSetAccount(String principal) {
-        long accountId = extractAccountId(principal);
+    public static boolean isPreSetAccount(String username) {
+        long accountId = extractAccountId(username);
         return isPreSetAccount(accountId);
     }
 
-    public static boolean isTestAccount(String principal) {
-        long accountId = extractAccountId(principal);
+    public static boolean isTestAccount(String username) {
+        long accountId = extractAccountId(username);
         return accountId >= 3000 && accountId < 5000;
     }
 
-    public static void assertPrincipal(String principal) {
-        if (principal.matches(TEST_PRINCIPAL_REGEX)) {//以test开头
-            if (isPreSetAccount(principal) || isTestAccount(principal)) return;
+    public static void assertUsername(String username) {
+        if (username.matches(TEST_USERNAME_REGEX)) {//以test开头
+            if (isPreSetAccount(username) || isTestAccount(username)) return;
         } else {
-            if (principal.matches(PRINCIPAL_REGEX)) return;
+            if (username.matches(USERNAME_REGEX)) return;
         }
-        throw UserError.INVALID_PRINCIPAL.exception();
+        throw UserError.INVALID_USERNAME.exception();
     }
 
-    public static void assertCertificate(String certificate) {
-        if (StringUtils.isEmpty(certificate)) {
-            throw UserError.INVALID_CERTIFICATE.exception();
+    public static void assertPassword(String password) {
+        if (StringUtils.isEmpty(password)) {
+            throw UserError.INVALID_PASSWORD.exception();
         }
     }
 

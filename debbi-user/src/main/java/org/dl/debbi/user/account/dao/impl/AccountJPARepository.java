@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public interface AccountJPARepository extends JpaRepository<Account, Long> {
 
-    Optional<Account> findByPrincipal(String principal);
+    Optional<Account> findByUsername(String username);
 
     @Modifying
-    @Query(value = "insert into account (id,principal,certificate,created) value (:id, :principal, :certificate, now())", nativeQuery = true)
-    void insert(@Param("id") long id, @Param("principal") String principal, @Param("certificate") String certificate);
+    @Query(value = "insert into account (id,username,password,created) value (:id, :usernmae, :password, now())", nativeQuery = true)
+    void insert(@Param("id") long id, @Param("username") String username, @Param("password") String password);
 
     @Modifying
     @Query(value = "update account set deleted = now() where id = :id", nativeQuery = true)

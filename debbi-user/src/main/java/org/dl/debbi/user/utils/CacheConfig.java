@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
 
-import static org.dl.debbi.user.account.utils.AccountHelper.MOCK_CERTIFICATE;
-import static org.dl.debbi.user.account.utils.AccountHelper.PRINCIPAL_PREFIX;
+import static org.dl.debbi.user.account.utils.AccountHelper.MOCK_PASSWORD;
+import static org.dl.debbi.user.account.utils.AccountHelper.USERNAME_PREFIX;
 
 @Configuration
 public class CacheConfig {
@@ -25,8 +25,8 @@ public class CacheConfig {
                     public Account load(Long id) {
                         Account a = new Account();
                         a.id = id;
-                        a.principal = PRINCIPAL_PREFIX + id;
-                        a.certificate = MOCK_CERTIFICATE;
+                        a.username = USERNAME_PREFIX + id;
+                        a.password = MOCK_PASSWORD;
                         a.created = new Date();
                         return a;
                     }

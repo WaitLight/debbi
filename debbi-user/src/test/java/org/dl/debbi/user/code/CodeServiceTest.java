@@ -19,7 +19,7 @@ public class CodeServiceTest {
 
     @Test
     public void get() {
-        String principal = "xx";
-        codeService.verify(principal, codeService.get(principal));
+        String username = "xx";
+        codeService.verify(username, codeService.get(username));
     }
 }
