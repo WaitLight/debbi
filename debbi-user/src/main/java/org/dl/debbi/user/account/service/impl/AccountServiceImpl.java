@@ -73,7 +73,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Object login(String username, String password) {
+    public String login(String username, String password) {
+        Account account = accountRepo.getByUsername(username).orElseThrow(UserError.INVALID_USER::exception);
+        if (passwordService.passwordsMatch(password, account.password)) {
+
+        } else {
+            throw UserError.INVALID_USER.exception();
+        }
         return null;
     }
 

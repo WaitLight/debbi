@@ -20,5 +20,5 @@ public interface AccountService {
     // 修改用户名
     void updateUsername(long id, String username);
 
-    Object login(String username, String password);
+    String login(String username, String password);
 }

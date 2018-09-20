@@ -51,21 +51,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>errorcode</groupId>
-                <artifactId>errorcode-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>errorCode</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <errorTypeClass>org.dl.debbi.common.error.Error</errorTypeClass>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
