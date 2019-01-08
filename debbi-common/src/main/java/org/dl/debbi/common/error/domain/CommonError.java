@@ -1,4 +1,4 @@
-package org.dl.debbi.common.error;
+package org.dl.debbi.common.error.domain;
 
 public enum CommonError implements Error {
     UNKONW(1),                  // 未知错误
@@ -29,5 +29,10 @@ public enum CommonError implements Error {
     @Override
     public String getName() {
         return name();
+    }
+
+    @Override
+    public RuntimeException e() {
+        return DebbiException.of(this);
     }
 }

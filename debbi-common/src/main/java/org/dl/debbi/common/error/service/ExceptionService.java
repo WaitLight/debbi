@@ -1,10 +1,8 @@
 package org.dl.debbi.common.error.service;
 
-import org.dl.debbi.common.error.domain.ErrorLog;
-
-import java.util.List;
+import org.dl.debbi.common.error.domain.DebbiError;
 
 public interface ExceptionService {
     String getErrorHash(Exception e);
-    ErrorLog explainError(String errorHash);
+    DebbiError explainError(String errorHash);
 }

@@ -2,8 +2,8 @@ package org.dl.debbi.common.error.service.impl;
 
 import com.google.common.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
-import org.dl.debbi.common.error.CommonError;
-import org.dl.debbi.common.error.domain.ErrorLog;
+import org.dl.debbi.common.error.domain.CommonError;
+import org.dl.debbi.common.error.domain.DebbiError;
 import org.dl.debbi.common.error.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.Objects;
 public class ExceptionServiceImpl implements ExceptionService {
 
     @Autowired
-    private Cache<String, ErrorLog> errorLogCache;
+    private Cache<String, DebbiError> errorLogCache;
 
     private Base64.Encoder encoder = Base64.getEncoder();
     private static final String SEPARATOR = "&";
@@ -38,16 +38,16 @@ public class ExceptionServiceImpl implements ExceptionService {
             }
         }
         String errorHash = encoder.encodeToString(hashStr.toString().getBytes(StandardCharsets.UTF_8));
-        ErrorLog errorLog = new ErrorLog(e.getMessage(), stackInfo, System.currentTimeMillis());
+        DebbiError errorLog = new DebbiError(e.getMessage(), stackInfo, System.currentTimeMillis());
         if (!Objects.isNull(errorLogCache.getIfPresent(errorHash)))
-            log.info("ErrorHash: {}, ErrorLog: {}.", errorHash, errorLog);
+            log.info("ErrorHash: {}, DebbiError: {}.", errorHash, errorLog);
         errorLogCache.put(errorHash, errorLog);
 
         return errorHash;
     }
 
     @Override
-    public ErrorLog explainError(String errorHash) {
+    public DebbiError explainError(String errorHash) {
         if (StringUtils.isEmpty(errorHash)) throw CommonError.INVALID_ARGUMENT.exception();
         return errorLogCache.getIfPresent(errorHash);
     }

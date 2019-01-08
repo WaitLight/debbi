@@ -1,7 +1,7 @@
 //package org.dl.debbi.user.code.impl;
 //
 //import io.lettuce.core.api.sync.RedisCommands;
-//import org.dl.debbi.common.utils.BuildConfig;
+//import org.dl.debbi.common.config.SystemConfig;
 //import org.dl.debbi.user.code.CodeService;
 //import org.dl.debbi.user.error.UserError;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +44,8 @@
 //    }
 //
 //    private String code() {
-//        if (BuildConfig.ENABLE_TEST_CODE) {
-//            return BuildConfig.TEST_CODE;
+//        if (SystemConfig.ENABLE_TEST_CODE) {
+//            return SystemConfig.TEST_CODE;
 //        } else {
 //            return String.valueOf(ThreadLocalRandom.current().ints(100000, 999999));
 //        }

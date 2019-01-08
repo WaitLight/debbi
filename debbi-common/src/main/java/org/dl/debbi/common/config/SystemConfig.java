@@ -1,6 +1,9 @@
-package org.dl.debbi.common.utils;
+package org.dl.debbi.common.config;
 
-public class BuildConfig {
+/**
+ * 系统通用配置，各种用户测试的
+ */
+public class SystemConfig {
     // 是否开启预置用户
     public static boolean ENABLE_PRESET_USER = true;
 

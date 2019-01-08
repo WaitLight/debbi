@@ -3,7 +3,6 @@ package org.dl.debbi.common.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.dl.debbi.common.error.Error;
-import org.dl.debbi.common.error.CommonError;
 
 import java.io.Serializable;
 
