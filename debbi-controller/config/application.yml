@@ -1,4 +1,5 @@
 spring:
+<<<<<<< HEAD
   redis:
     url: redis://admin@104.224.130.79:6379
   datasource:
@@ -11,5 +12,9 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5Dialect
+=======
+  profiles:
+    active: h2
+>>>>>>> acd34eb69a5305a84e529b33c1815451c9ba29e9
 server:
   port: 9001
