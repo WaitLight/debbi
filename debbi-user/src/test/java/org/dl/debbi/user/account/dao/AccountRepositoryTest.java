@@ -25,7 +25,7 @@ public class AccountRepositoryTest {
 
     @After
     public void after() {
-        accountRepo.cleanup(4001L);
+//        accountRepo.cleanup(4001L);
     }
 
     @Test(expected = Exception.class)
@@ -37,7 +37,7 @@ public class AccountRepositoryTest {
     public void normalRegister() {
         Account account = accountRepo.register("abc312", "123");
 
-        accountRepo.cleanup(account.id);
+//        accountRepo.cleanup(account.id);
     }
 
     @Test

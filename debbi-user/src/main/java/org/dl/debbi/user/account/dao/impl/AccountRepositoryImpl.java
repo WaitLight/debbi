@@ -61,7 +61,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     public void delete(long id) {
         if (isPreSetAccount(id))
             throw UserError.INVALID_USER.exception();
-        jpaRepo.delete(id);
+//        jpaRepo.delete(id);
     }
 
     @Transactional
@@ -105,7 +105,7 @@ public class AccountRepositoryImpl implements AccountRepository {
                 account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
             }
             try {
-                jpaRepo.insert(account.id, account.username, account.password);
+//                jpaRepo.insert(account.id, account.username, account.password);
                 return account;
             } catch (Exception e) {
                 if (jpaRepo.findByUsername(account.username).isPresent()) {

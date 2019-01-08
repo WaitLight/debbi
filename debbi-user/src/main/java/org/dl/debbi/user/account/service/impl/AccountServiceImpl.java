@@ -7,7 +7,6 @@ import org.dl.debbi.user.account.dao.AccountRepository;
 import org.dl.debbi.user.account.domain.Account;
 import org.dl.debbi.user.account.service.AccountService;
 import org.dl.debbi.user.account.utils.AccountHelper;
-import org.dl.debbi.user.code.impl.StringCodeService;
 import org.dl.debbi.user.error.UserError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +24,13 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepo;
     @Autowired
     private PasswordService passwordService;
-    @Autowired
-    private StringCodeService codeService;
+//    @Autowired
+//    private StringCodeService codeService;
 
     @Override
     @Transactional
     public synchronized Account register(String username, String password, String code) {
-        codeService.verify(username, code);
+//        codeService.verify(username, code);
         return accountRepo.register(username, passwordService.encryptPassword(password));
     }
 
