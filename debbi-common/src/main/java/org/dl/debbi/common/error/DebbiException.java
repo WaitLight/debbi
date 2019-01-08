@@ -1,4 +1,4 @@
-package org.dl.debbi.common.error.domain;
+package org.dl.debbi.common.error;
 
 import lombok.Getter;
 import lombok.Setter;

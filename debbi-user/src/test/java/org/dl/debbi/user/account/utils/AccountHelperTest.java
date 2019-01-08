@@ -1,6 +1,6 @@
 package org.dl.debbi.user.account.utils;
 
-import org.dl.debbi.common.error.domain.DebbiException;
+import org.dl.debbi.common.error.DebbiException;
 import org.junit.Test;
 
 import static org.dl.debbi.user.account.utils.AccountHelper.assertUsername;

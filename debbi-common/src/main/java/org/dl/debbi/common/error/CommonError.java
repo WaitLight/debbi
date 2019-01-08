@@ -1,4 +1,4 @@
-package org.dl.debbi.common.error.domain;
+package org.dl.debbi.common.error;
 
 public enum CommonError implements Error {
     UNKONW(1),                  // 未知错误

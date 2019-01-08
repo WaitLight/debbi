@@ -1,4 +1,4 @@
-package org.dl.debbi.common.error.domain;
+package org.dl.debbi.common.error;
 
 public interface Error {
     int getCode();

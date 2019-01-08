@@ -1,7 +1,7 @@
 package org.dl.debbi.controller.advice;
 
 import lombok.extern.slf4j.Slf4j;
-import org.dl.debbi.common.error.domain.DebbiException;
+import org.dl.debbi.common.error.DebbiException;
 import org.dl.debbi.common.error.service.ExceptionService;
 import org.dl.debbi.common.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;

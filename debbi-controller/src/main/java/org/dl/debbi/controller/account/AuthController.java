@@ -1,6 +1,6 @@
 package org.dl.debbi.controller.account;
 
-import org.dl.debbi.common.error.domain.CommonError;
+import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.user.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
