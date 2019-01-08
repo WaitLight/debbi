@@ -2,9 +2,9 @@ package org.dl.debbi.user.account.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.util.Assert;
-import org.dl.debbi.user.account.domain.Account;
+import org.dl.debbi.common.utils.BuildConfig;
 import org.dl.debbi.user.account.dao.AccountRepository;
-import org.dl.debbi.user.account.service.AccountService;
+import org.dl.debbi.user.account.domain.Account;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +28,12 @@ public class AccountServiceTest {
 
     @Before
     public void before() {
-        accountService.register("wangxiaoming", "123321");
+        accountService.register("wangxiaoming", "123321", BuildConfig.TEST_CODE);
     }
 
     @After
     public void after() {
-        Optional<Account> accountOpt = accountRepo.getByPrincipal("wangxiaoming");
+        Optional<Account> accountOpt = accountRepo.getByUsername("wangxiaoming");
         assert accountOpt.isPresent();
         accountRepo.cleanup(accountOpt.get().id);
     }

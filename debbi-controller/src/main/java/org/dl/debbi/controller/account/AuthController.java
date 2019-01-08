@@ -1,5 +1,6 @@
 package org.dl.debbi.controller.account;
 
+import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.user.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,13 @@ public class AuthController {
     private AccountService accountService;
 
     @PostMapping("/register")
-    public Response register(String principal, String certificate) {
-        return Response.succ(accountService.register(principal, certificate));
+    public Response register(String username, String password, String code) {
+        return Response.success(accountService.register(username, password, code));
+    }
+
+    @PostMapping("/login")
+    public Response login(String username, String password) {
+        accountService.login(username, password);
+        return Response.fail(CommonError.TODO);
     }
 }

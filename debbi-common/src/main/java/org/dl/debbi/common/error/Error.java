@@ -1,8 +1,9 @@
 package org.dl.debbi.common.error;
 
-// 基础错误类型
-public interface ErrorType {
+public interface Error {
+
     int getCode();
+
     String getName();
 
     default DebbiException exception() {

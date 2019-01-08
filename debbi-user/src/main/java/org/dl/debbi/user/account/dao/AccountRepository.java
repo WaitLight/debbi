@@ -6,10 +6,10 @@ import java.util.Optional;
 
 public interface AccountRepository {
 
-    Account register(String principal, String certificate);
+    Account register(String username, String password);
 
     Optional<Account> get(long id);
-    Optional<Account> getByPrincipal(String principal);
+    Optional<Account> getByUsername(String username);
 
     void delete(long id);
     Account update(Account account);
@@ -18,7 +18,7 @@ public interface AccountRepository {
     void cleanup(long id);
 
     enum Type {
-        PRINCIPAL,
-        CERTIFICATE
+        USERNAME,
+        PASSWORD
     }
 }

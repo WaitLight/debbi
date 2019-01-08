@@ -19,6 +19,7 @@ public class CodeServiceTest {
 
     @Test
     public void get() {
-        assertTrue(codeService.verify(12L, codeService.get(12L)));
+        String username = "xx";
+        codeService.verify(username, codeService.get(username));
     }
 }

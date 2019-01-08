@@ -5,6 +5,7 @@ import org.dl.debbi.common.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,7 +15,7 @@ public class ErrorController {
     private ExceptionService exceptionService;
 
     @GetMapping("/explain")
-    public Response explain(String hash) {
-        return Response.succ(exceptionService.explainError(hash));
+    public Response explain(String errorHash) {
+        return Response.success(exceptionService.explainError(errorHash));
     }
 }

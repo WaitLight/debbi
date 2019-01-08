@@ -1,15 +1,17 @@
 package org.dl.debbi.user.error;
 
-import org.dl.debbi.common.error.ErrorType;
+import org.dl.debbi.common.error.Error;
+import org.dl.debbi.common.error.CommonError;
 
-public enum UserError implements ErrorType {
+public enum UserError implements Error {
 
-    invalid_principal(144101),              // 非法用户名
-    invalid_user(144102),                   // 非法用户
-    invalid_certificate(144103),            // 错误的密码
-    register_fail(144601),                  // 注册失败
-    conflict_principal(140901),             // 用户名重复
-    invalid_user_info(144104),              // 错误的用户信息参数
+    INVALID_USERNAME(1001),             // 非法用户名
+    INVALID_USER(1002),                 // 非法用户
+    INVALID_PASSWORD(1003),             // 错误的密码
+    REGISTER_FAIL(1004),                // 注册失败
+    CONFLICT_USERNAME(1005),            // 用户名重复
+    INVALID_CAPTCHA(1006),              // 错误的验证码
+    INVALID_UPDATE_KEY_WORD(1007),      // 错误的修改字段
     ;
 
     private int code;
@@ -18,7 +20,6 @@ public enum UserError implements ErrorType {
         this.code = code;
     }
 
-
     @Override
     public int getCode() {
         return this.code;
@@ -26,6 +27,6 @@ public enum UserError implements ErrorType {
 
     @Override
     public String getName() {
-        return this.name();
+        return name().toLowerCase();
     }
 }

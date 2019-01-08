@@ -46,8 +46,8 @@ public class AccountRepositoryTest {
         assert preSetAccount.isPresent();
         Account account = preSetAccount.get();
         assert account.id == 2000;
-        assert account.principal.startsWith("test-");
-        assert account.certificate.equals("123456");
+        assert account.username.startsWith("test-");
+        assert account.password.equals("123456");
     }
 
 }
