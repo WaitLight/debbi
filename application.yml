@@ -1,13 +1,5 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://104.224.130.79:3306/debbi?autoReconnect=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-    password: root
-    username: admin
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5Dialect
+  profiles:
+    active: h2
 server:
   port: 9001
