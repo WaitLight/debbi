@@ -5,8 +5,6 @@ import org.dl.debbi.user.error.UserError;
 import org.springframework.util.StringUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class AccountHelper {
 
@@ -20,12 +18,10 @@ public final class AccountHelper {
     // 用户名规则：中英文数字和下划线，最小4位，最长20位
     public static final String USERNAME_REGEX = "[\\u4e00-\\u9fa5_a-zA-Z0-9]{4,20}";
 
-    /**
+    /*
      * 根据username生成uid
      * 1. 测试账号以test
      *
-     * @param username
-     * @return
      */
     public static Long generateId(String username) {
         if (username.matches(TEST_USERNAME_REGEX)) {
@@ -50,12 +46,12 @@ public final class AccountHelper {
         } else {
             if (username.matches(USERNAME_REGEX)) return;
         }
-        throw UserError.INVALID_USERNAME.exception();
+        throw UserError.INVALID_USERNAME.e();
     }
 
     public static void assertPassword(String password) {
         if (StringUtils.isEmpty(password)) {
-            throw UserError.INVALID_PASSWORD.exception();
+            throw UserError.INVALID_PASSWORD.e();
         }
     }
 

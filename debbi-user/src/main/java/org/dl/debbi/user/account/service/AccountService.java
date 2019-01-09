@@ -11,7 +11,7 @@ public interface AccountService {
 
     default UsernamePasswordToken token(String username, String password) {
         Account account = auth(username, password);
-        return new UsernamePasswordToken(account.username, account.password);
+        return new UsernamePasswordToken(account.getUsername(), account.getPassword());
     }
 
     // 重置密码

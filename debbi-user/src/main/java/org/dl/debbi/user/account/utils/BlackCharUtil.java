@@ -1,6 +1,7 @@
 package org.dl.debbi.user.account.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dl.debbi.common.error.CommonError;
 
 // 特殊字符列表 http://kb.mozillazine.org/Network.IDN.blacklist_chars
 public class BlackCharUtil {
@@ -120,10 +121,17 @@ public class BlackCharUtil {
     }
 
     public static boolean contentBlackChar(String str) {
+        str = StringUtils.trim(str);
+        if (StringUtils.isBlank(str)) return true;
         return str.matches(".*[" + REGEX + "]+.*");
     }
 
+    public static void assertNotContentBlackChar(String str) {
+        if (contentBlackChar(str)) throw CommonError.INVALID_ARGUMENT.e();
+    }
+
     public static String trimBlackChar(String str) {
+        str = StringUtils.trim(str);
         if (StringUtils.isBlank(str)) return null;
         return str.replaceAll("[" + REGEX + "]", " ").replaceAll("[\\s]{2,}", " ").trim();
     }

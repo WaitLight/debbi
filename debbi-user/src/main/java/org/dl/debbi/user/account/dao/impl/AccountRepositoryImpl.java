@@ -3,10 +3,10 @@ package org.dl.debbi.user.account.dao.impl;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.dl.debbi.common.config.SystemConfig;
+import org.dl.debbi.user.account.dao.AccountRepository;
+import org.dl.debbi.user.account.domain.Account;
 import org.dl.debbi.user.account.utils.AccountHelper;
 import org.dl.debbi.user.error.UserError;
-import org.dl.debbi.user.account.domain.Account;
-import org.dl.debbi.user.account.dao.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,14 +28,8 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     @Transactional
-    public Account register(String username, String password) {
-        assertUsername(username);
-        assertPassword(password);
-
-        Account account = new Account();
-        account.username = username;
-        account.password = password;
-        return insert(account);
+    public Account signUp(String username, String password) {
+        return insert(Account.signUp(username, password));
     }
 
     @Override
@@ -96,16 +90,11 @@ public class AccountRepositoryImpl implements AccountRepository {
             throw UserError.INVALID_USER.exception();
     }
 
-    private Account insert(Account account) {
+    private Account insertWithRetry(Account account) {
         // 保存时可能是id重复，也可能是username重复
         for (int i = 0; i < 3; i++) {
-            if (isTestAccount(account.username)) {
-                account.id = generateId(account.username);// 测试账号id不随机
-            } else {
-                account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
-            }
             try {
-//                jpaRepo.insert(account.id, account.username, account.password);
+                Account save = jpaRepo.save(account);
                 return account;
             } catch (Exception e) {
                 if (jpaRepo.findByUsername(account.username).isPresent()) {

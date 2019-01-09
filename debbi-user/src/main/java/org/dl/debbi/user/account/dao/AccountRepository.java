@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface AccountRepository {
 
-    Account register(String username, String password);
+    Account signUp(String username, String password);
 
     Optional<Account> get(long id);
     Optional<Account> getByUsername(String username);
