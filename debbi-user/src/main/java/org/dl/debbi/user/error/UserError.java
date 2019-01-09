@@ -1,5 +1,6 @@
 package org.dl.debbi.user.error;
 
+import org.dl.debbi.common.error.DebbiException;
 import org.dl.debbi.common.error.Error;
 
 public enum UserError implements Error {
@@ -27,5 +28,10 @@ public enum UserError implements Error {
     @Override
     public String getName() {
         return name().toLowerCase();
+    }
+
+    @Override
+    public RuntimeException e() {
+        return DebbiException.of(this);
     }
 }

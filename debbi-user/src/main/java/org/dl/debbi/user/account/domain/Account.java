@@ -36,11 +36,12 @@ public class Account {
     private Long deleted;
 
     public static Account signUp(String username, String password) {
+        long now = System.currentTimeMillis();
         return new Account()
                 .setUsername(username)
                 .setPassword(password)
-                .setCreated(System.currentTimeMillis())
-                .setUpdated(System.currentTimeMillis());
+                .setCreated(now)
+                .setUpdated(now);
     }
 
     public Account setUsername(String username) {
