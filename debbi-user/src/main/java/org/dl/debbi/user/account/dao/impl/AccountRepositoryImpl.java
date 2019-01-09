@@ -52,7 +52,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public Optional<Account> getByUsername(String username) {
         if (isPreSetAccount(username))
-            return Optional.ofNullable(getMock(extractAccountId(username)));
+            return Optional.ofNullable(getMock(generateId(username)));
 
         return jpaRepo.findByUsername(username);
     }
@@ -100,7 +100,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         // 保存时可能是id重复，也可能是username重复
         for (int i = 0; i < 3; i++) {
             if (isTestAccount(account.username)) {
-                account.id = extractAccountId(account.username);// 测试账号id不随机
+                account.id = generateId(account.username);// 测试账号id不随机
             } else {
                 account.id = ThreadLocalRandom.current().nextLong(5000, Long.MAX_VALUE);
             }

@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -21,18 +21,19 @@ import java.util.Date;
 public class Account {
 
     @Id
-    public long id;
+    private Long id;
 
     @Column(unique = true)
     @NonNull
-    public String username;
+    private String username;
     @NonNull
-    public String password;
+    private String password;
 
-    public Date created;
-    public Date deleted;
+    private Instant created;
+    private Instant updated;
+    private Instant deleted;
 
     public boolean isDeleted() {
-        return deleted == null;
+        return null == deleted;
     }
 }

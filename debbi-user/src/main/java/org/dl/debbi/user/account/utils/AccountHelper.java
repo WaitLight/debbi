@@ -1,12 +1,14 @@
 package org.dl.debbi.user.account.utils;
 
+import org.dl.debbi.common.error.CommonError;
 import org.dl.debbi.user.error.UserError;
 import org.springframework.util.StringUtils;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AccountHelper {
+public final class AccountHelper {
 
     public static final String MOCK_PASSWORD = "123456";
     public static final String USERNAME_PREFIX = "test-";
@@ -18,26 +20,27 @@ public class AccountHelper {
     // 用户名规则：中英文数字和下划线，最小4位，最长20位
     public static final String USERNAME_REGEX = "[\\u4e00-\\u9fa5_a-zA-Z0-9]{4,20}";
 
-
-    public static long extractAccountId(String username) {
-        if (StringUtils.isEmpty(username) || !username.matches(TEST_USERNAME_REGEX))
-            return -1L;
-
-        Pattern pattern = Pattern.compile(NUMBER_REGEX);
-        Matcher matcher = pattern.matcher(username);
-        if (matcher.find()) {
-            return Long.valueOf(matcher.group());
+    /**
+     * 根据username生成uid
+     * 1. 测试账号以test
+     *
+     * @param username
+     * @return
+     */
+    public static Long generateId(String username) {
+        if (username.matches(TEST_USERNAME_REGEX)) {
+            return ThreadLocalRandom.current().nextLong();
         }
-        return -1L;
+        throw CommonError.INVALID_ARGUMENT.e();
     }
 
     public static boolean isPreSetAccount(String username) {
-        long accountId = extractAccountId(username);
+        long accountId = generateId(username);
         return isPreSetAccount(accountId);
     }
 
     public static boolean isTestAccount(String username) {
-        long accountId = extractAccountId(username);
+        long accountId = generateId(username);
         return accountId >= 3000 && accountId < 5000;
     }
 
