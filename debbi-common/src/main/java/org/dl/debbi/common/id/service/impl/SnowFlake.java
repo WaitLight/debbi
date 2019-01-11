@@ -41,17 +41,21 @@ public final class SnowFlake implements IdGenerator {
     public SnowFlake(final int process, final int business, final long originTimeMillis) {
         if (process > MAX_PROCESS || process < 0) {
             throw new IllegalArgumentException(String.format(
-                    "Process Id can't be greater than %d or less than 0",
+                    "Process can't be greater than %d or less than 0",
                     MAX_PROCESS));
         }
         this.process = process;
 
         if (business > MAX_BUSINESS || business < 0) {
             throw new IllegalArgumentException(String.format(
-                    "biz Id can't be greater than %d or less than 0",
+                    "Business can't be greater than %d or less than 0",
                     MAX_BUSINESS));
         }
         this.business = business;
+
+        if (originTimeMillis <= 0) {
+            throw new IllegalArgumentException("Origin time millis can't be less than 0 or equals 0");
+        }
         this.originTimeMillis = originTimeMillis;
     }
 
