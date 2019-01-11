@@ -1,12 +1,10 @@
 package org.dl.debbi.common.id.service.impl;
 
+import lombok.Setter;
 import org.dl.debbi.common.id.service.IdGenerator;
 
+@Setter
 public final class SnowFlake implements IdGenerator {
-
-    // 业务启动时间，使用时减去当前时间，以扩大可用id范围
-    // 多节点环境中，业务启动时间可通过专用服务器获取
-    private final static long BUSINESS_START_TIMESTAMP = 1547109209631L;
 
     // 进程（JVM）id 长度
     private final static int PROCESS_BIT_LENGTH = 5;
@@ -35,8 +33,12 @@ public final class SnowFlake implements IdGenerator {
     private final int business;
     private long sequence = 0L;
 
+    // 业务启动时间，使用时减去当前时间，以扩大可用id范围
+    // 多节点环境中，业务启动时间可通过专用服务器获取
+    private final long originTimeMillis;
+
     // 多节点环境中，可通过专用服务器获取
-    public SnowFlake(final int process, final int business) {
+    public SnowFlake(final int process, final int business, final long originTimeMillis) {
         if (process > MAX_PROCESS || process < 0) {
             throw new IllegalArgumentException(String.format(
                     "Process Id can't be greater than %d or less than 0",
@@ -50,6 +52,7 @@ public final class SnowFlake implements IdGenerator {
                     MAX_BUSINESS));
         }
         this.business = business;
+        this.originTimeMillis = originTimeMillis;
     }
 
     @Override
@@ -71,7 +74,7 @@ public final class SnowFlake implements IdGenerator {
         lastTimeMillis = currentTimeMillis;
 
         // 减去开始时间，是为了扩大可用id的范围
-        return (currentTimeMillis - BUSINESS_START_TIMESTAMP) << TIMESTAMP_POSITION
+        return (currentTimeMillis - originTimeMillis) << TIMESTAMP_POSITION
                 | business << BUSINESS_POSITION
                 | process << PROCESS_POSITION
                 | sequence;
