@@ -2,7 +2,6 @@ package org.dl.debbi.common.id.service.impl;
 
 import lombok.Setter;
 import org.dl.debbi.common.id.service.IdGenerator;
-import org.springframework.stereotype.Service;
 
 /*
  * 原理 https://www.lanindex.com/twitter-snowflake%EF%BC%8C64%E4%BD%8D%E8%87%AA%E5%A2%9Eid%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
  * 1. 能否隐藏业务增量？
  *      生成的id只与时间相关，无法通过两个id的差值计算业务增量
  */
-@Service
 @Setter
 public final class SnowFlake implements IdGenerator {
 
