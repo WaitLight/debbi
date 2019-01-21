@@ -1,5 +1,15 @@
 spring:
   profiles:
     active: h2
+  application:
+    name: debbi-common
+  main:
+    allow-bean-definition-overriding: true
+
 server:
   port: 9001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9527/eureka/
