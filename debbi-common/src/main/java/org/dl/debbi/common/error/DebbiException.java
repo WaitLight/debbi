@@ -7,14 +7,14 @@ import lombok.Setter;
 @Setter
 public final class DebbiException extends RuntimeException {
 
-    private final Error error;
+  private final Error error;
 
-    private DebbiException(Error error) {
-        super(error.getName() + " " + error.getCode());
-        this.error = error;
-    }
+  private DebbiException(Error error) {
+    super(error.getName() + " " + error.getCode());
+    this.error = error;
+  }
 
-    public static DebbiException of(Error error) {
-        return new DebbiException(error);
-    }
+  public static DebbiException of(Error error) {
+    return new DebbiException(error);
+  }
 }

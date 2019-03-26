@@ -1,8 +1,8 @@
 package org.dl.debbi.common.id.service;
 
-public interface IdGenerator {
+public interface RetryIdGenerator {
 
-  long next();
+  long next(long attempts);
 
   long[] nextBatch();
 }

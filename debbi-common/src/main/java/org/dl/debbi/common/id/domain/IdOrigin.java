@@ -12,8 +12,9 @@ import javax.persistence.Id;
 @Accessors(chain = true)
 @Entity
 public class IdOrigin {
-    @Id
-    private int process;
-    private int business;
-    private long originTimeMillis;
+
+  @Id
+  private int process;
+  private int business;
+  private long originTimeMillis;
 }

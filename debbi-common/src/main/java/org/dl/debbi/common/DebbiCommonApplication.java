@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DebbiCommonApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(DebbiCommonApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(DebbiCommonApplication.class, args);
+  }
 }
